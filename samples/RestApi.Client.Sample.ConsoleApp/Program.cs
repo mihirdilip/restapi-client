@@ -5,6 +5,8 @@ using RestApi.Client.Authentication;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.Net.Http.Headers;
+using RestApi.Client.ContentSerializer;
 
 namespace RestApi.Client.Sample.ConsoleApp
 {
@@ -13,9 +15,10 @@ namespace RestApi.Client.Sample.ConsoleApp
 		static async Task Main(string[] args)
 		{
 			var client = new RestClientBuilder()
-				//.AddBasicAuthentication<BasicAuthenticationProvider>()
+				.SetBaseAddress(new Uri("https://localhost/api/v1"))
+				.AddBasicAuthentication<BasicAuthenticationProvider>()
 				.Build();
-			var res = await client.GetAsync<List<Hub>>("https://localhost/api/v1/hubs").ConfigureAwait(false);
+			var res = await client.GetAsync<List<Hub>>("hubs").ConfigureAwait(false);
 
 			Console.ReadKey();
 		}
@@ -29,7 +32,7 @@ namespace RestApi.Client.Sample.ConsoleApp
 		}
 	}
 
-	internal class Hub
+	public class Hub
 	{
 		public string Code { get; set; }
 		public string Name { get; set; }

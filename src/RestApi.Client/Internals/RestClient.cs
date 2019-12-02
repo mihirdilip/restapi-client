@@ -112,7 +112,7 @@ namespace RestApi.Client
 		{
 			if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
 
-			var uri = new Uri(url);
+			var uri = new Uri(url.TrimStart('/'), UriKind.RelativeOrAbsolute);
 			if (!uri.IsAbsoluteUri)
 			{
 				if (string.IsNullOrWhiteSpace(_options.BaseAddress?.OriginalString)) throw new Exception($"{nameof(RestClientOptions.BaseAddress)} is set on {nameof(RestClientOptions)}.");

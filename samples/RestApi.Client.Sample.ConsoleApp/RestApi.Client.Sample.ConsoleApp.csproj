@@ -8,6 +8,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\RestApi.Client.Authentication.Basic\RestApi.Client.Authentication.Basic.csproj" />
     <ProjectReference Include="..\..\src\RestApi.Client.ContentSerializer.Json\RestApi.Client.ContentSerializer.Json.csproj" />
+    <ProjectReference Include="..\..\src\RestApi.Client.ContentSerializer.Xml\RestApi.Client.ContentSerializer.Xml.csproj" />
     <ProjectReference Include="..\..\src\RestApi.Client\RestApi.Client.csproj" />
   </ItemGroup>
 

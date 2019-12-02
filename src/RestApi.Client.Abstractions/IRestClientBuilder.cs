@@ -4,6 +4,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using RestApi.Client.Authentication;
 using RestApi.Client.ContentSerializer;
+using System;
 
 namespace RestApi.Client
 {
@@ -11,15 +12,28 @@ namespace RestApi.Client
 	{
 		IServiceCollection Services { get; }
 
-		IRestClientBuilder AddHttpContentSerializer<TSerializer>() 
-			where TSerializer : class, IHttpContentSerializer;
+		IRestClientBuilder SetBaseAddress(Uri baseAddress);
+
+		IRestClientBuilder SetDefaultRequestHeaders(RestHttpHeaders defaultRequestHeaders);
+
+		IRestClientBuilder SetMaxResponseContentBufferSize(int maxResponseContentBufferSize);
+
+		IRestClientBuilder SetTimeout(TimeSpan timeout);
+
+		IRestClientBuilder SetRestClientOptions(RestClientOptions options);
+
+		IRestClientBuilder AddHttpContentSerializer<THttpContentSerializerImplementation>() 
+			where THttpContentSerializerImplementation : class, IHttpContentSerializer;
 
 		IRestClientBuilder ClearHttpContentSerializers();
 
-		IRestClientBuilder AddAuthenticationHandler<TRestAuthenticationHandler>()
-			where TRestAuthenticationHandler : class, IRestAuthenticationHandler;
+		IRestClientBuilder AddAuthenticationHandler<TRestAuthenticationHandlerImplementation>()
+			where TRestAuthenticationHandlerImplementation : class, IRestAuthenticationHandler;
 
 		IRestClientBuilder ClearAuthenticationHandler();
+
+		IRestClientBuilder ReplaceRestClient<TRestClientImplementation>()
+			where TRestClientImplementation : class, IRestClient;
 
 		IRestClient Build();
 	}
