@@ -13,9 +13,12 @@ namespace RestApi.Client.Authentication
 		public string Value { get; }
 
 		public BasicAuthentication(string username, string password)
-			: this(Convert.ToBase64String(Encoding.Default.GetBytes($"{username}:{password}")))
 		{
+			if (string.IsNullOrWhiteSpace(username)) throw new ArgumentNullException(nameof(username));
+			if (string.IsNullOrWhiteSpace(password)) throw new ArgumentNullException(nameof(password));
 
+			Scheme = BasicDefaults.AuthenticationScheme;
+			Value = Convert.ToBase64String(Encoding.Default.GetBytes($"{username}:{password}"));
 		}
 
 		public BasicAuthentication(string token)
