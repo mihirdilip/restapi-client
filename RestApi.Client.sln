@@ -11,15 +11,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestApi.Client.Authenticati
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestApi.Client.ContentSerializer.Json", "src\RestApi.Client.ContentSerializer.Json\RestApi.Client.ContentSerializer.Json.csproj", "{6F4CBA14-CDEF-4DC9-B775-9B8DA50856C7}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{2FA31B1F-4E08-4C7F-AB04-A9FDA08D3B53}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestApi.Client.Sample.ConsoleApp", "samples\RestApi.Client.Sample.ConsoleApp\RestApi.Client.Sample.ConsoleApp.csproj", "{81E0E678-2596-4C10-8663-58752EF842E3}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestApi.Client.ContentSerializer.PlainText", "src\RestApi.Client.ContentSerializer.PlainText\RestApi.Client.ContentSerializer.PlainText.csproj", "{8FA00320-D499-4D35-9C7F-56ABF9E7A60E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestApi.Client.ContentSerializer.Xml", "src\RestApi.Client.ContentSerializer.Xml\RestApi.Client.ContentSerializer.Xml.csproj", "{B91D4334-62D8-4719-87DF-9DEF3C17EB68}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestApi.Client.Authentication.ApiKey", "src\RestApi.Client.Authentication.ApiKey\RestApi.Client.Authentication.ApiKey.csproj", "{FE2BCCFB-4A20-4A5A-B6C4-B89827FAD71B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestApi.Client.Authentication.ApiKey", "src\RestApi.Client.Authentication.ApiKey\RestApi.Client.Authentication.ApiKey.csproj", "{FE2BCCFB-4A20-4A5A-B6C4-B89827FAD71B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,10 +39,6 @@ Global
 		{6F4CBA14-CDEF-4DC9-B775-9B8DA50856C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6F4CBA14-CDEF-4DC9-B775-9B8DA50856C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6F4CBA14-CDEF-4DC9-B775-9B8DA50856C7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{81E0E678-2596-4C10-8663-58752EF842E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{81E0E678-2596-4C10-8663-58752EF842E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{81E0E678-2596-4C10-8663-58752EF842E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{81E0E678-2596-4C10-8663-58752EF842E3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8FA00320-D499-4D35-9C7F-56ABF9E7A60E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8FA00320-D499-4D35-9C7F-56ABF9E7A60E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8FA00320-D499-4D35-9C7F-56ABF9E7A60E}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -62,9 +54,6 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{81E0E678-2596-4C10-8663-58752EF842E3} = {2FA31B1F-4E08-4C7F-AB04-A9FDA08D3B53}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DE2F448D-3C7A-41CB-9BFD-F5C3CD6FA6F3}
