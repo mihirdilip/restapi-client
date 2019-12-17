@@ -7,24 +7,16 @@ namespace RestApi.Client.Authentication
 {
 	public class ApiKeyAuthentication
 	{
-		public ApiKeyAuthentication(string key, string value, ApiKeyAddTo addTo = ApiKeyAddTo.Header)
+		public ApiKeyAuthentication(string key, string value)
 		{
 			if (string.IsNullOrWhiteSpace(key)) throw new ArgumentNullException(nameof(key));
 			if (string.IsNullOrWhiteSpace(value)) throw new ArgumentNullException(nameof(value));
 
 			Key = key;
-			Value = key;
-			AddTo = addTo;
+			Value = value;
 		}
 
 		public string Key { get; }
 		public string Value { get; }
-		public ApiKeyAddTo AddTo { get; }
-	}
-
-	public enum ApiKeyAddTo
-	{
-		Header,
-		QueryParams
 	}
 }

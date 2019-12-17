@@ -19,12 +19,12 @@ namespace RestApi.Client.Authentication
 			var newQueryString = new QueryString();
 			if (!string.IsNullOrWhiteSpace(request.RequestUri.Query))
 			{
-				newQueryString.Add(QueryString.FromUriComponent(request.RequestUri.Query));
+				newQueryString = newQueryString.Add(QueryString.FromUriComponent(request.RequestUri.Query));
 			}
 
 			if (extraQueryString.HasValue)
 			{
-				newQueryString.Add(extraQueryString);
+				newQueryString = newQueryString.Add(extraQueryString);
 			}
 
 			var queryBuilder = new UriBuilder(request.RequestUri)
