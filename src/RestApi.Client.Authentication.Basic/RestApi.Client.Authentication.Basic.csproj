@@ -1,12 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-    <RootNamespace>RestApi.Client.Authentication</RootNamespace>
-  </PropertyGroup>
+	<PropertyGroup>
+		<RootNamespace>RestApi.Client.Authentication</RootNamespace>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\RestApi.Client.Abstractions\RestApi.Client.Abstractions.csproj" />
-  </ItemGroup>
+	<ItemGroup Condition="'$(Configuration)'=='Release'">
+		<PackageReference Include="RestApi.Client.Abstractions" Version="$(Version)" />
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(Configuration)'!='Release'">
+		<ProjectReference Include="..\RestApi.Client.Abstractions\RestApi.Client.Abstractions.csproj" />
+	</ItemGroup>
 
 </Project>

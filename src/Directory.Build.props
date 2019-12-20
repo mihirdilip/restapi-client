@@ -1,0 +1,29 @@
+<Project>
+	<PropertyGroup>
+		<TargetFramework>netstandard2.0</TargetFramework>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)'=='Release'">
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+	</PropertyGroup>
+	
+	<PropertyGroup>
+		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+		<Version>2.2.0-preview.1</Version>
+		<PackageLicenseFile>LICENSE</PackageLicenseFile>
+		<Authors>Mihir Dilip</Authors>
+		<Company>Mihir Dilip</Company>
+		<Copyright>Copyright (c) 2019 Mihir Dilip</Copyright>
+		<PackageProjectUrl>https://github.com/mihirdilip/restapi-client</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/mihirdilip/restapi-client</RepositoryUrl>
+		<RepositoryType>GitHub</RepositoryType>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Include="..\..\LICENSE">
+			<Pack>True</Pack>
+			<PackagePath></PackagePath>
+		</None>
+	</ItemGroup>
+</Project>
