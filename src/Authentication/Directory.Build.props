@@ -1,0 +1,23 @@
+<Project>
+	<Import Project="..\Directory.Build.props" />
+
+	<PropertyGroup>
+		<RootNamespace>RestApi.Client.Authentication</RootNamespace>
+	</PropertyGroup>
+
+	<ItemGroup Condition="'$(Configuration)'=='Debug'">
+		<ProjectReference Include="..\..\RestApi.Client.Abstractions\RestApi.Client.Abstractions.csproj" />
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(Configuration)'!='Debug'">
+		<PackageReference Include="RestApi.Client.Abstractions" Version="$(Version)" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="..\..\..\LICENSE">
+			<Pack>True</Pack>
+			<PackagePath></PackagePath>
+		</None>
+	</ItemGroup>
+
+</Project>

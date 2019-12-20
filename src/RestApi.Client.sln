@@ -7,20 +7,30 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestApi.Client.Abstractions
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestApi.Client", "RestApi.Client\RestApi.Client.csproj", "{0FBC5489-FAAE-4529-87DF-AB09BDB865F5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestApi.Client.Authentication.ApiKey", "RestApi.Client.Authentication.ApiKey\RestApi.Client.Authentication.ApiKey.csproj", "{941B956A-1408-444B-8748-109C632365A3}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestApi.Client.Authentication.Basic", "RestApi.Client.Authentication.Basic\RestApi.Client.Authentication.Basic.csproj", "{CAC06F8A-D36F-444B-952B-3811F5C77153}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestApi.Client.ContentSerializer.Json", "RestApi.Client.ContentSerializer.Json\RestApi.Client.ContentSerializer.Json.csproj", "{E2ABF4C5-7208-494F-8D65-7876D327F344}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestApi.Client.ContentSerializer.PlainText", "RestApi.Client.ContentSerializer.PlainText\RestApi.Client.ContentSerializer.PlainText.csproj", "{6BA9D2DB-CE39-45CF-B43D-D3F97C92D1FD}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestApi.Client.ContentSerializer.Xml", "RestApi.Client.ContentSerializer.Xml\RestApi.Client.ContentSerializer.Xml.csproj", "{A234DD67-31D7-49E7-85F8-878C81F7B630}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{69F0157C-440C-494D-8020-01BF0C952F62}"
 	ProjectSection(SolutionItems) = preProject
 		Directory.Build.props = Directory.Build.props
 	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Authentication", "Authentication", "{AACBEC0D-272A-4B28-913C-F370A5BB2DA7}"
+	ProjectSection(SolutionItems) = preProject
+		Authentication\Directory.Build.props = Authentication\Directory.Build.props
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ContentSerializer", "ContentSerializer", "{C6D07CD1-75B9-49B7-BA19-E80DB00647D2}"
+	ProjectSection(SolutionItems) = preProject
+		ContentSerializer\Directory.Build.props = ContentSerializer\Directory.Build.props
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestApi.Client.Authentication.ApiKey", "Authentication\RestApi.Client.Authentication.ApiKey\RestApi.Client.Authentication.ApiKey.csproj", "{F381AEF2-C3CC-472A-BEB7-91046164354A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestApi.Client.Authentication.Basic", "Authentication\RestApi.Client.Authentication.Basic\RestApi.Client.Authentication.Basic.csproj", "{45F26B5F-4DB7-4BB9-8973-FA5306211DDA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestApi.Client.ContentSerializer.Json", "ContentSerializer\RestApi.Client.ContentSerializer.Json\RestApi.Client.ContentSerializer.Json.csproj", "{63143324-13DF-4CFE-8684-3A47495156EB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestApi.Client.ContentSerializer.PlainText", "ContentSerializer\RestApi.Client.ContentSerializer.PlainText\RestApi.Client.ContentSerializer.PlainText.csproj", "{38AB2425-05CE-442A-BE9A-0C8FADBD8CFF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestApi.Client.ContentSerializer.Xml", "ContentSerializer\RestApi.Client.ContentSerializer.Xml\RestApi.Client.ContentSerializer.Xml.csproj", "{9A49C5DB-9722-403A-9B4D-1AE30F80D1D5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,29 +46,36 @@ Global
 		{0FBC5489-FAAE-4529-87DF-AB09BDB865F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0FBC5489-FAAE-4529-87DF-AB09BDB865F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0FBC5489-FAAE-4529-87DF-AB09BDB865F5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{941B956A-1408-444B-8748-109C632365A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{941B956A-1408-444B-8748-109C632365A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{941B956A-1408-444B-8748-109C632365A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{941B956A-1408-444B-8748-109C632365A3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CAC06F8A-D36F-444B-952B-3811F5C77153}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CAC06F8A-D36F-444B-952B-3811F5C77153}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CAC06F8A-D36F-444B-952B-3811F5C77153}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CAC06F8A-D36F-444B-952B-3811F5C77153}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E2ABF4C5-7208-494F-8D65-7876D327F344}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E2ABF4C5-7208-494F-8D65-7876D327F344}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E2ABF4C5-7208-494F-8D65-7876D327F344}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E2ABF4C5-7208-494F-8D65-7876D327F344}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6BA9D2DB-CE39-45CF-B43D-D3F97C92D1FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6BA9D2DB-CE39-45CF-B43D-D3F97C92D1FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6BA9D2DB-CE39-45CF-B43D-D3F97C92D1FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6BA9D2DB-CE39-45CF-B43D-D3F97C92D1FD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A234DD67-31D7-49E7-85F8-878C81F7B630}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A234DD67-31D7-49E7-85F8-878C81F7B630}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A234DD67-31D7-49E7-85F8-878C81F7B630}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A234DD67-31D7-49E7-85F8-878C81F7B630}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F381AEF2-C3CC-472A-BEB7-91046164354A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F381AEF2-C3CC-472A-BEB7-91046164354A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F381AEF2-C3CC-472A-BEB7-91046164354A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F381AEF2-C3CC-472A-BEB7-91046164354A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{45F26B5F-4DB7-4BB9-8973-FA5306211DDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45F26B5F-4DB7-4BB9-8973-FA5306211DDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45F26B5F-4DB7-4BB9-8973-FA5306211DDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45F26B5F-4DB7-4BB9-8973-FA5306211DDA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63143324-13DF-4CFE-8684-3A47495156EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63143324-13DF-4CFE-8684-3A47495156EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63143324-13DF-4CFE-8684-3A47495156EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63143324-13DF-4CFE-8684-3A47495156EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38AB2425-05CE-442A-BE9A-0C8FADBD8CFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38AB2425-05CE-442A-BE9A-0C8FADBD8CFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38AB2425-05CE-442A-BE9A-0C8FADBD8CFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38AB2425-05CE-442A-BE9A-0C8FADBD8CFF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A49C5DB-9722-403A-9B4D-1AE30F80D1D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A49C5DB-9722-403A-9B4D-1AE30F80D1D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A49C5DB-9722-403A-9B4D-1AE30F80D1D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A49C5DB-9722-403A-9B4D-1AE30F80D1D5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F381AEF2-C3CC-472A-BEB7-91046164354A} = {AACBEC0D-272A-4B28-913C-F370A5BB2DA7}
+		{45F26B5F-4DB7-4BB9-8973-FA5306211DDA} = {AACBEC0D-272A-4B28-913C-F370A5BB2DA7}
+		{63143324-13DF-4CFE-8684-3A47495156EB} = {C6D07CD1-75B9-49B7-BA19-E80DB00647D2}
+		{38AB2425-05CE-442A-BE9A-0C8FADBD8CFF} = {C6D07CD1-75B9-49B7-BA19-E80DB00647D2}
+		{9A49C5DB-9722-403A-9B4D-1AE30F80D1D5} = {C6D07CD1-75B9-49B7-BA19-E80DB00647D2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DE2F448D-3C7A-41CB-9BFD-F5C3CD6FA6F3}
