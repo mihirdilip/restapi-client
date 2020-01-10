@@ -1,10 +1,10 @@
 ﻿// Copyright (c) Mihir Dilip. All rights reserved.
 // Licensed under the MIT License. See License in the project root for license information.
 
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Net;
 using System.Net.Http.Headers;
-using Microsoft.AspNetCore.Mvc;
 
 namespace RestApi.Client
 {

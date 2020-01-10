@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Mihir Dilip. All rights reserved.
 // Licensed under the MIT License. See License in the project root for license information.
 
-using Mihir.AspNetCore.Authentication.Basic;
 using System;
 using System.Text;
 
@@ -9,8 +8,8 @@ namespace RestApi.Client.Authentication
 {
 	public class BasicAuthentication
 	{
-		public string Scheme { get; }
-		public string Value { get; }
+		internal string Scheme { get; private set; }
+		internal string Value { get; }
 
 		public BasicAuthentication(string username, string password)
 		{
@@ -29,25 +28,13 @@ namespace RestApi.Client.Authentication
 			Value = token;
 		}
 
-		protected bool Equals(BasicAuthentication other)
+		/// <summary>
+		/// Overrides the scheme name passed to the Authorization header. Default scheme name is Basic.
+		/// </summary>
+		/// <param name="overriddenScheme"></param>
+		public void OverrideScheme(string overriddenScheme)
 		{
-			return string.Equals(Scheme, other.Scheme) && string.Equals(Value, other.Value);
-		}
-
-		public override bool Equals(object obj)
-		{
-			if (ReferenceEquals(null, obj)) return false;
-			if (ReferenceEquals(this, obj)) return true;
-			if (obj.GetType() != this.GetType()) return false;
-			return Equals((BasicAuthentication)obj);
-		}
-
-		public override int GetHashCode()
-		{
-			unchecked
-			{
-				return ((Scheme != null ? Scheme.GetHashCode() : 0) * 397) ^ (Value != null ? Value.GetHashCode() : 0);
-			}
+			Scheme = overriddenScheme;
 		}
 	}
 }

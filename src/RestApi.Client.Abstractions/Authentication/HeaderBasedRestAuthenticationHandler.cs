@@ -14,6 +14,8 @@ namespace RestApi.Client.Authentication
 			if (request == null) throw new ArgumentNullException(nameof(request));
 
 			var headers = await GetHeadersAsync().ConfigureAwait(false);
+			if (headers == null) return true;
+
 			foreach (var header in headers)
 			{
 				request.Headers.Remove(header.Key);

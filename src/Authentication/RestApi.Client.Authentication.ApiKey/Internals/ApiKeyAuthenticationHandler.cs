@@ -18,7 +18,9 @@ namespace RestApi.Client.Authentication
 		protected override async Task<RestHttpHeaders> GetHeadersAsync()
 		{
 			var authentication = await _authenticationProvider.ProvideAsync().ConfigureAwait(false);
-			return new RestHttpHeaders { {authentication.Key, authentication.Value} };
+			return authentication == null 
+				? new RestHttpHeaders() 
+				: new RestHttpHeaders { {authentication.Key, authentication.Value} };
 		}
 	}
 
@@ -34,7 +36,9 @@ namespace RestApi.Client.Authentication
 		protected override async Task<QueryString> GetQueryStringAsync()
 		{
 			var authentication = await _authenticationProvider.ProvideAsync().ConfigureAwait(false);
-			return new QueryString().Add(authentication.Key, authentication.Value);
+			return authentication == null 
+				? new QueryString() 
+				: new QueryString().Add(authentication.Key, authentication.Value);
 		}
 	}
 }

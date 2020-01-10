@@ -18,7 +18,9 @@ namespace RestApi.Client.Authentication
 		protected override async Task<AuthenticationHeaderValue> GetAuthenticationHeaderValueAsync()
 		{
 			var basicAuth = await _authenticationProvider.ProvideAsync().ConfigureAwait(false);
-			return new AuthenticationHeaderValue(basicAuth.Scheme, basicAuth.Value);
+			return basicAuth == null 
+				? null 
+				: new AuthenticationHeaderValue(basicAuth.Scheme, basicAuth.Value);
 		}
 	}
 }

@@ -16,7 +16,7 @@ namespace RestApi.Client.Authentication
 			Value = value;
 		}
 
-		public string Key { get; }
-		public string Value { get; }
+		internal string Key { get; }
+		internal string Value { get; }
 	}
 }

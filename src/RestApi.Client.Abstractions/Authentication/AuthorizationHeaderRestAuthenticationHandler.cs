@@ -11,7 +11,9 @@ namespace RestApi.Client.Authentication
 		protected override async Task<RestHttpHeaders> GetHeadersAsync()
 		{
 			var authHeaderValue = await GetAuthenticationHeaderValueAsync().ConfigureAwait(false);
-			return new RestHttpHeaders { authHeaderValue };
+			return authHeaderValue == null 
+				? new RestHttpHeaders() 
+				: new RestHttpHeaders { authHeaderValue };
 		}
 
 		protected abstract Task<AuthenticationHeaderValue> GetAuthenticationHeaderValueAsync();
