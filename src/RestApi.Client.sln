@@ -32,6 +32,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestApi.Client.ContentSeria
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestApi.Client.ContentSerializer.Xml", "ContentSerializer\RestApi.Client.ContentSerializer.Xml\RestApi.Client.ContentSerializer.Xml.csproj", "{9A49C5DB-9722-403A-9B4D-1AE30F80D1D5}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestApi.Client.Authentication.Bearer", "Authentication\RestApi.Client.Authentication.Bearer\RestApi.Client.Authentication.Bearer.csproj", "{CE7B670B-2C08-4535-AA0D-B408F027F96D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -66,6 +68,10 @@ Global
 		{9A49C5DB-9722-403A-9B4D-1AE30F80D1D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9A49C5DB-9722-403A-9B4D-1AE30F80D1D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9A49C5DB-9722-403A-9B4D-1AE30F80D1D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE7B670B-2C08-4535-AA0D-B408F027F96D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE7B670B-2C08-4535-AA0D-B408F027F96D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE7B670B-2C08-4535-AA0D-B408F027F96D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE7B670B-2C08-4535-AA0D-B408F027F96D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -76,6 +82,7 @@ Global
 		{63143324-13DF-4CFE-8684-3A47495156EB} = {C6D07CD1-75B9-49B7-BA19-E80DB00647D2}
 		{38AB2425-05CE-442A-BE9A-0C8FADBD8CFF} = {C6D07CD1-75B9-49B7-BA19-E80DB00647D2}
 		{9A49C5DB-9722-403A-9B4D-1AE30F80D1D5} = {C6D07CD1-75B9-49B7-BA19-E80DB00647D2}
+		{CE7B670B-2C08-4535-AA0D-B408F027F96D} = {AACBEC0D-272A-4B28-913C-F370A5BB2DA7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DE2F448D-3C7A-41CB-9BFD-F5C3CD6FA6F3}
