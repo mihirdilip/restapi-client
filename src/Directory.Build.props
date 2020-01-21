@@ -5,8 +5,8 @@
 	</PropertyGroup>
 
 	<PropertyGroup>
-		<Version>2.2.0-preview.1</Version>
-		<Copyright>Copyright (c) 2019 Mihir Dilip</Copyright>
+		<Version>2.2.0-preview.2</Version>
+		<Copyright>Copyright (c) 2020 Mihir Dilip</Copyright>
 		<Authors>Mihir Dilip</Authors>
 		<Company>Mihir Dilip</Company>
 		<PackageProjectUrl>https://github.com/mihirdilip/restapi-client</PackageProjectUrl>

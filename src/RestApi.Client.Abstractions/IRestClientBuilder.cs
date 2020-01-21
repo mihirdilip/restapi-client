@@ -5,11 +5,13 @@ using Microsoft.Extensions.DependencyInjection;
 using RestApi.Client.Authentication;
 using RestApi.Client.ContentSerializer;
 using System;
+using System.ComponentModel;
 
 namespace RestApi.Client
 {
 	public interface IRestClientBuilder
 	{
+		[EditorBrowsable(EditorBrowsableState.Never)]
 		IServiceCollection Services { get; }
 
 		IRestClientBuilder SetBaseAddress(Uri baseAddress);
@@ -29,6 +31,9 @@ namespace RestApi.Client
 
 		IRestClientBuilder AddAuthenticationHandler<TRestAuthenticationHandlerImplementation>()
 			where TRestAuthenticationHandlerImplementation : class, IRestAuthenticationHandler;
+
+		IRestClientBuilder AddValidator<TRestClientValidatorImplementation>()
+			where TRestClientValidatorImplementation : class, IRestClientValidator;
 
 		IRestClientBuilder ClearAuthenticationHandler();
 

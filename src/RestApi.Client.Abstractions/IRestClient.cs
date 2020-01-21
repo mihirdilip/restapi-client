@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License in the project root for license information.
 
 using System;
+using System.ComponentModel;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -9,6 +10,9 @@ namespace RestApi.Client
 {
 	public interface IRestClient : IDisposable
 	{
+		[EditorBrowsable(EditorBrowsableState.Never)]
+		IServiceProvider ServiceProvider { get; }
+
 		Task<IRestResponse> GetAsync(string url, RestHttpHeaders headers = null);
 		Task<IRestResponse<TResponseContent>> GetAsync<TResponseContent>(string url, RestHttpHeaders headers = null);
 		

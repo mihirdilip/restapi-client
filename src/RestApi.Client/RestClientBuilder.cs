@@ -8,12 +8,14 @@ using Microsoft.Extensions.Logging;
 using RestApi.Client.Authentication;
 using RestApi.Client.ContentSerializer;
 using System;
+using System.ComponentModel;
 using System.Linq;
 
 namespace RestApi.Client
 {
 	public class RestClientBuilder : IRestClientBuilder
 	{
+		[EditorBrowsable(EditorBrowsableState.Never)]
 		public IServiceCollection Services { get; }
 
 		public RestClientBuilder()
@@ -99,6 +101,13 @@ namespace RestApi.Client
 		{
 			ClearAuthenticationHandler();
 			Services.AddScoped<IRestAuthenticationHandler, TRestAuthenticationHandlerImplementation>();
+			return this;
+		}
+
+		public IRestClientBuilder AddValidator<TRestClientValidatorImplementation>() 
+			where TRestClientValidatorImplementation : class, IRestClientValidator
+		{
+			Services.AddSingleton<IRestClientValidator, TRestClientValidatorImplementation>();
 			return this;
 		}
 

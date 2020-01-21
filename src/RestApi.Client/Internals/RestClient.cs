@@ -4,8 +4,10 @@
 using Microsoft.Extensions.Options;
 using RestApi.Client.Authentication;
 using System;
+using System.ComponentModel;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace RestApi.Client
 {
@@ -16,13 +18,19 @@ namespace RestApi.Client
 		private readonly IHttpContentHandler _bodyContentHandler;
 		private readonly IRestAuthenticationHandler _restAuthenticationHandler;
 
-		public RestClient(IOptions<RestClientOptions> options, IHttpClientFactory httpClientFactory, IHttpContentHandler bodyContentHandler, IRestAuthenticationHandler restAuthenticationHandler)
+		public RestClient(IOptions<RestClientOptions> options, IServiceProvider serviceProvider, IHttpClientFactory httpClientFactory, IHttpContentHandler bodyContentHandler, IRestAuthenticationHandler restAuthenticationHandler)
 		{
 			_options = options.Value;
 			_httpClient = httpClientFactory.CreateClient();
+			ServiceProvider = serviceProvider;
 			_bodyContentHandler = bodyContentHandler;
 			_restAuthenticationHandler = restAuthenticationHandler;
+
+			ValidateInstance();
 		}
+
+		[EditorBrowsable(EditorBrowsableState.Never)]
+		public IServiceProvider ServiceProvider { get; }
 
 		public Task<IRestResponse> GetAsync(string url, RestHttpHeaders headers = null)
 		{
@@ -106,6 +114,18 @@ namespace RestApi.Client
 		{
 			// DO NOT DISPOSE HTTP CLIENT AS HTTP CLIENT IS SINGLETON
 			//_httpClient?.Dispose();
+		}
+
+		private void ValidateInstance()
+		{
+			var validators = ServiceProvider.GetServices<IRestClientValidator>();
+			if (validators != null)
+			{
+				foreach (var validator in validators)
+				{
+					validator.Validate();
+				}
+			}
 		}
 
 		private async Task<HttpRequestMessage> BuildHttpRequestMessageAsync<TRequestContent>(HttpMethod httpMethod, string url, RestHttpHeaders headers, TRequestContent body = default, string contentMediaType = default)

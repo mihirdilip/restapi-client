@@ -5,20 +5,20 @@ using System;
 
 namespace RestApi.Client.Authentication
 {
-	public class BearerAuthentication
+	public class OAuth2Authentication
 	{
 		internal string Scheme { get; private set; }
 		internal string Value { get; }
 
-		public BearerAuthentication(string accessToken)
+		public OAuth2Authentication(string accessToken)
 		{
 			if (string.IsNullOrWhiteSpace(accessToken)) throw new ArgumentNullException(nameof(accessToken));
 
-			Scheme = BearerDefaults.AuthenticationScheme;
+			Scheme = OAuth2Defaults.AuthenticationScheme;
 			Value = accessToken;
 		}
 
-		public BearerAuthentication(string scheme, string accessToken)
+		public OAuth2Authentication(string scheme,  string accessToken)
 		{
 			if (string.IsNullOrWhiteSpace(scheme)) throw new ArgumentNullException(nameof(scheme));
 			if (string.IsNullOrWhiteSpace(accessToken)) throw new ArgumentNullException(nameof(accessToken));
