@@ -3,11 +3,8 @@
 		<None Remove="*.csproj.DotSettings" />
 	</ItemGroup>
 
-	<ItemGroup Condition="'$(Configuration)'=='Debug'">
+	<ItemGroup>
 		<ProjectReference Include="..\RestApi.Client.Authentication.TokenExtensions\RestApi.Client.Authentication.TokenExtensions.csproj" />
 	</ItemGroup>
 
-	<ItemGroup Condition="'$(Configuration)'!='Debug'">
-		<PackageReference Include="RestApi.Client.Authentication.TokenExtensions" Version="$(Version)" />
-	</ItemGroup>
 </Project>

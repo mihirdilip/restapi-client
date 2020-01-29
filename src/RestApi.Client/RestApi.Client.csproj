@@ -17,16 +17,10 @@
 		</None>
 	</ItemGroup>
 
-	<ItemGroup Condition="'$(Configuration)'=='Debug'">
+	<ItemGroup>
 		<ProjectReference Include="..\RestApi.Client.Abstractions\RestApi.Client.Abstractions.csproj" />
 		<ProjectReference Include="..\ContentSerializer\RestApi.Client.ContentSerializer.Json\RestApi.Client.ContentSerializer.Json.csproj" />
 		<ProjectReference Include="..\ContentSerializer\RestApi.Client.ContentSerializer.PlainText\RestApi.Client.ContentSerializer.PlainText.csproj" />
-	</ItemGroup>
-
-	<ItemGroup Condition="'$(Configuration)'!='Debug'">
-		<PackageReference Include="RestApi.Client.Abstractions" Version="$(Version)" />
-		<PackageReference Include="RestApi.Client.ContentSerializer.Json" Version="$(Version)" />
-		<PackageReference Include="RestApi.Client.ContentSerializer.PlainText" Version="$(Version)" />
 	</ItemGroup>
 
 </Project>

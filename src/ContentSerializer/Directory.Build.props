@@ -6,12 +6,8 @@
 		<RootNamespace>RestApi.Client.ContentSerializer</RootNamespace>
 	</PropertyGroup>
 
-	<ItemGroup Condition="'$(Configuration)'=='Debug'">
+	<ItemGroup>
 		<ProjectReference Include="..\..\RestApi.Client.Abstractions\RestApi.Client.Abstractions.csproj" />
-	</ItemGroup>
-
-	<ItemGroup Condition="'$(Configuration)'!='Debug'">
-		<PackageReference Include="RestApi.Client.Abstractions" Version="$(Version)" />
 	</ItemGroup>
 
 	<ItemGroup>
