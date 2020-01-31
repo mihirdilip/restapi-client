@@ -10,6 +10,7 @@ using RestApi.Client.ContentSerializer;
 using System;
 using System.ComponentModel;
 using System.Linq;
+using System.Net.Http;
 
 namespace RestApi.Client
 {
@@ -80,6 +81,18 @@ namespace RestApi.Client
 		public IRestClientBuilder SetTimeout(TimeSpan timeout)
 		{
 			Services.Configure<HttpClientFactoryOptions>(c => c.HttpClientActions.Add(client => client.Timeout = timeout));
+			return this;
+		}
+
+		public IRestClientBuilder SetPrimaryHttpMessageHandler(HttpMessageHandler primaryHandler)
+		{
+			Services.Configure<HttpClientFactoryOptions>(c => c.HttpMessageHandlerBuilderActions.Add(builder => builder.PrimaryHandler = primaryHandler));
+			return this;
+		}
+
+		public IRestClientBuilder SetAdditionalDelegatingHandler(DelegatingHandler additionalHandler)
+		{
+			Services.Configure<HttpClientFactoryOptions>(c => c.HttpMessageHandlerBuilderActions.Add(builder => builder.AdditionalHandlers.Add(additionalHandler)));
 			return this;
 		}
 
