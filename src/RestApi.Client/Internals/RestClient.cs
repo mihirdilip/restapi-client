@@ -38,7 +38,7 @@ namespace RestApi.Client
 			return GetAsync(url, default, cancellationToken);
 		}
 
-		public Task<IRestResponse> GetAsync(string url, RestHttpHeaders headers = default, CancellationToken cancellationToken = default)
+		public Task<IRestResponse> GetAsync(string url, RestHttpHeaders headers, CancellationToken cancellationToken = default)
 		{
 			return SendAsync(HttpMethod.Get, url, headers, cancellationToken);
 		}
@@ -48,7 +48,7 @@ namespace RestApi.Client
 			return GetAsync<TResponseContent>(url, default, cancellationToken);
 		}
 
-		public Task<IRestResponse<TResponseContent>> GetAsync<TResponseContent>(string url, RestHttpHeaders headers = default, CancellationToken cancellationToken = default)
+		public Task<IRestResponse<TResponseContent>> GetAsync<TResponseContent>(string url, RestHttpHeaders headers, CancellationToken cancellationToken = default)
 		{
 			return SendAsync<TResponseContent>(HttpMethod.Get, url, headers, cancellationToken);
 		}
@@ -58,7 +58,7 @@ namespace RestApi.Client
 			return PostAsync(url, default, cancellationToken);
 		}
 
-		public Task<IRestResponse> PostAsync(string url, RestHttpHeaders headers = default, CancellationToken cancellationToken = default)
+		public Task<IRestResponse> PostAsync(string url, RestHttpHeaders headers, CancellationToken cancellationToken = default)
 		{
 			return SendAsync(HttpMethod.Post, url, headers, cancellationToken);
 		}
@@ -68,7 +68,7 @@ namespace RestApi.Client
 			return PostAsync(url, content, default, contentMediaType, cancellationToken);
 		}
 
-		public Task<IRestResponse> PostAsync<TRequestContent>(string url, TRequestContent content, RestHttpHeaders headers = default, string contentMediaType = default, CancellationToken cancellationToken = default)
+		public Task<IRestResponse> PostAsync<TRequestContent>(string url, TRequestContent content, RestHttpHeaders headers, string contentMediaType = default, CancellationToken cancellationToken = default)
 		{
 			return SendAsync(HttpMethod.Post, url, content, headers, contentMediaType, cancellationToken);
 		}
@@ -78,7 +78,7 @@ namespace RestApi.Client
 			return PostAsync<TResponseContent, TRequestContent>(url, content, default, contentMediaType, cancellationToken);
 		}
 
-		public Task<IRestResponse<TResponseContent>> PostAsync<TResponseContent, TRequestContent>(string url, TRequestContent content, RestHttpHeaders headers = default, string contentMediaType = default, CancellationToken cancellationToken = default)
+		public Task<IRestResponse<TResponseContent>> PostAsync<TResponseContent, TRequestContent>(string url, TRequestContent content, RestHttpHeaders headers, string contentMediaType = default, CancellationToken cancellationToken = default)
 		{
 			return SendAsync<TResponseContent, TRequestContent>(HttpMethod.Post, url, content, headers, contentMediaType, cancellationToken);
 		}
@@ -88,7 +88,7 @@ namespace RestApi.Client
 			return PutAsync(url, content, default, contentMediaType, cancellationToken);
 		}
 
-		public Task<IRestResponse> PutAsync<TRequestContent>(string url, TRequestContent content, RestHttpHeaders headers = default, string contentMediaType = default, CancellationToken cancellationToken = default)
+		public Task<IRestResponse> PutAsync<TRequestContent>(string url, TRequestContent content, RestHttpHeaders headers, string contentMediaType = default, CancellationToken cancellationToken = default)
 		{
 			return SendAsync(HttpMethod.Put, url, content, headers, contentMediaType, cancellationToken);
 		}
@@ -98,7 +98,7 @@ namespace RestApi.Client
 			return PutAsync<TResponseContent, TRequestContent>(url, content, default, contentMediaType, cancellationToken);
 		}
 
-		public Task<IRestResponse<TResponseContent>> PutAsync<TResponseContent, TRequestContent>(string url, TRequestContent content, RestHttpHeaders headers = default, string contentMediaType = default, CancellationToken cancellationToken = default)
+		public Task<IRestResponse<TResponseContent>> PutAsync<TResponseContent, TRequestContent>(string url, TRequestContent content, RestHttpHeaders headers, string contentMediaType = default, CancellationToken cancellationToken = default)
 		{
 			return SendAsync<TResponseContent, TRequestContent>(HttpMethod.Put, url, content, headers, contentMediaType, cancellationToken);
 		}
@@ -108,7 +108,7 @@ namespace RestApi.Client
 			return DeleteAsync(url, default, cancellationToken);
 		}
 
-		public Task<IRestResponse> DeleteAsync(string url, RestHttpHeaders headers = default, CancellationToken cancellationToken = default)
+		public Task<IRestResponse> DeleteAsync(string url, RestHttpHeaders headers, CancellationToken cancellationToken = default)
 		{
 			return SendAsync(HttpMethod.Delete, url, headers, cancellationToken);
 		}
@@ -118,7 +118,7 @@ namespace RestApi.Client
 			return DeleteAsync<TResponseContent>(url, default, cancellationToken);
 		}
 
-		public Task<IRestResponse<TResponseContent>> DeleteAsync<TResponseContent>(string url, RestHttpHeaders headers = default, CancellationToken cancellationToken = default)
+		public Task<IRestResponse<TResponseContent>> DeleteAsync<TResponseContent>(string url, RestHttpHeaders headers, CancellationToken cancellationToken = default)
 		{
 			return SendAsync<TResponseContent>(HttpMethod.Delete, url, headers, cancellationToken);
 		}
@@ -128,7 +128,7 @@ namespace RestApi.Client
 			return SendAsync(httpMethod, url, default, cancellationToken);
 		}
 
-		public Task<IRestResponse> SendAsync(HttpMethod httpMethod, string url, RestHttpHeaders headers = default, CancellationToken cancellationToken = default)
+		public Task<IRestResponse> SendAsync(HttpMethod httpMethod, string url, RestHttpHeaders headers, CancellationToken cancellationToken = default)
 		{
 			return SendAsync<object>(httpMethod, url, default, headers, default, cancellationToken);
 		}
@@ -138,7 +138,7 @@ namespace RestApi.Client
 			return SendAsync<TResponseContent>(httpMethod, url, default, cancellationToken);
 		}
 
-		public Task<IRestResponse<TResponseContent>> SendAsync<TResponseContent>(HttpMethod httpMethod, string url, RestHttpHeaders headers = default, CancellationToken cancellationToken = default)
+		public Task<IRestResponse<TResponseContent>> SendAsync<TResponseContent>(HttpMethod httpMethod, string url, RestHttpHeaders headers, CancellationToken cancellationToken = default)
 		{
 			return SendAsync<TResponseContent, object>(httpMethod, url, default, headers, default, cancellationToken);
 		}
@@ -148,7 +148,7 @@ namespace RestApi.Client
 			return SendAsync(httpMethod, url, content, default, contentMediaType, cancellationToken);
 		}
 
-		public async Task<IRestResponse> SendAsync<TRequestContent>(HttpMethod httpMethod, string url, TRequestContent content, RestHttpHeaders headers = default, string contentMediaType = default, CancellationToken cancellationToken = default)
+		public async Task<IRestResponse> SendAsync<TRequestContent>(HttpMethod httpMethod, string url, TRequestContent content, RestHttpHeaders headers, string contentMediaType = default, CancellationToken cancellationToken = default)
 		{
 			using (var request = await BuildHttpRequestMessageAsync(httpMethod, url, headers, content, contentMediaType).ConfigureAwait(false))
 			{
@@ -165,7 +165,7 @@ namespace RestApi.Client
 			return SendAsync<TResponseContent, TRequestContent>(httpMethod, url, content, default, contentMediaType, cancellationToken);
 		}
 
-		public async Task<IRestResponse<TResponseContent>> SendAsync<TResponseContent, TRequestContent>(HttpMethod httpMethod, string url, TRequestContent content, RestHttpHeaders headers = default, string contentMediaType = default, CancellationToken cancellationToken = default)
+		public async Task<IRestResponse<TResponseContent>> SendAsync<TResponseContent, TRequestContent>(HttpMethod httpMethod, string url, TRequestContent content, RestHttpHeaders headers, string contentMediaType = default, CancellationToken cancellationToken = default)
 		{
 			using (var request = await BuildHttpRequestMessageAsync(httpMethod, url, headers, content, contentMediaType).ConfigureAwait(false))
 			{
