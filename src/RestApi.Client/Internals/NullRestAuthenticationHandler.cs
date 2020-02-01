@@ -3,13 +3,14 @@
 
 using RestApi.Client.Authentication;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace RestApi.Client
 {
 	internal class NullRestAuthenticationHandler : IRestAuthenticationHandler
 	{
-		public Task<bool> HandleAsync(HttpRequestMessage request)
+		public Task<bool> HandleAsync(HttpRequestMessage request, CancellationToken cancellationToken = default)
 		{
 			return Task.FromResult(true);
 		}

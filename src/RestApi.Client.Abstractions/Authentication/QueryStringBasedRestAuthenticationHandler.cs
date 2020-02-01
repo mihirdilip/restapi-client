@@ -4,17 +4,19 @@
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace RestApi.Client.Authentication
 {
 	public abstract class QueryStringBasedRestAuthenticationHandler : IRestAuthenticationHandler
 	{
-		public async Task<bool> HandleAsync(HttpRequestMessage request)
+		public async Task<bool> HandleAsync(HttpRequestMessage request, CancellationToken cancellationToken = default)
 		{
+			cancellationToken.ThrowIfCancellationRequested();
 			if (request == null) throw new ArgumentNullException(nameof(request));
 
-			var extraQueryString = await GetQueryStringAsync().ConfigureAwait(false);
+			var extraQueryString = await GetQueryStringAsync(cancellationToken).ConfigureAwait(false);
 
 			var newQueryString = new QueryString();
 			if (!string.IsNullOrWhiteSpace(request.RequestUri.Query))
@@ -37,6 +39,6 @@ namespace RestApi.Client.Authentication
 			return true;
 		}
 
-		protected abstract Task<QueryString> GetQueryStringAsync();
+		protected abstract Task<QueryString> GetQueryStringAsync(CancellationToken cancellationToken);
 	}
 }

@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License in the project root for license information.
 
 using Microsoft.AspNetCore.Http;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace RestApi.Client.Authentication
@@ -15,9 +16,9 @@ namespace RestApi.Client.Authentication
 			_authenticationProvider = authenticationProvider;
 		}
 
-		protected override async Task<RestHttpHeaders> GetHeadersAsync()
+		protected override async Task<RestHttpHeaders> GetHeadersAsync(CancellationToken cancellationToken)
 		{
-			var authentication = await _authenticationProvider.ProvideAsync().ConfigureAwait(false);
+			var authentication = await _authenticationProvider.ProvideAsync(cancellationToken).ConfigureAwait(false);
 			return authentication == null 
 				? new RestHttpHeaders() 
 				: new RestHttpHeaders { {authentication.Key, authentication.Value} };
@@ -33,9 +34,9 @@ namespace RestApi.Client.Authentication
 			_authenticationProvider = authenticationProvider;
 		}
 
-		protected override async Task<QueryString> GetQueryStringAsync()
+		protected override async Task<QueryString> GetQueryStringAsync(CancellationToken cancellationToken)
 		{
-			var authentication = await _authenticationProvider.ProvideAsync().ConfigureAwait(false);
+			var authentication = await _authenticationProvider.ProvideAsync(cancellationToken).ConfigureAwait(false);
 			return authentication == null 
 				? new QueryString() 
 				: new QueryString().Add(authentication.Key, authentication.Value);

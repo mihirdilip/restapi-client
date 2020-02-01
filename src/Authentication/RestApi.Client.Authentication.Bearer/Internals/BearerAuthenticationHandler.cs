@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License in the project root for license information.
 
 using System.Net.Http.Headers;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace RestApi.Client.Authentication
@@ -15,9 +16,9 @@ namespace RestApi.Client.Authentication
 			_authenticationProvider = authenticationProvider;
 		}
 
-		protected override async Task<AuthenticationHeaderValue> GetAuthenticationHeaderValueAsync()
+		protected override async Task<AuthenticationHeaderValue> GetAuthenticationHeaderValueAsync(CancellationToken cancellationToken)
 		{
-			var authentication = await _authenticationProvider.ProvideAsync().ConfigureAwait(false);
+			var authentication = await _authenticationProvider.ProvideAsync(cancellationToken).ConfigureAwait(false);
 			return authentication == null
 				? null 
 				: new AuthenticationHeaderValue(authentication.Scheme, authentication.Value);

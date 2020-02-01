@@ -7,13 +7,14 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace RestApi.Client.Authentication
 {
 	internal interface ITokenService : IDisposable
 	{
-		Task<TokenResponse> ProcessRequestAsync(string providerName, ITokenRequest request);
+		Task<TokenResponse> ProcessRequestAsync(string providerName, ITokenRequest request, CancellationToken cancellationToken);
 	}
 
 	internal class TokenService : ITokenService
@@ -30,41 +31,43 @@ namespace RestApi.Client.Authentication
 			_tokenProviderConfigs = tokenProviderConfigs;
 		}
 
-		public Task<TokenResponse> ProcessRequestAsync(string providerName, ITokenRequest request)
+		public Task<TokenResponse> ProcessRequestAsync(string providerName, ITokenRequest request, CancellationToken cancellationToken)
 		{
+			cancellationToken.ThrowIfCancellationRequested();
+
 			if (string.IsNullOrWhiteSpace(providerName)) throw new ArgumentNullException(nameof(providerName));
 			if (request == null) throw new ArgumentNullException(nameof(request));
 
 			switch (request)
 			{
 				case PasswordCredentialsTokenRequest tokenRequest:
-					return RequestPasswordCredentialsTokenAsync(providerName, tokenRequest);
+					return RequestPasswordCredentialsTokenAsync(providerName, tokenRequest, cancellationToken);
 
 				case ClientCredentialsTokenRequest tokenRequest:
-					return RequestClientCredentialsTokenAsync(providerName, tokenRequest);
+					return RequestClientCredentialsTokenAsync(providerName, tokenRequest, cancellationToken);
 
 				case RefreshTokenRequest tokenRequest:
-					return RequestRefreshTokenAsync(providerName, tokenRequest);
+					return RequestRefreshTokenAsync(providerName, tokenRequest, cancellationToken);
 
 				case RevokeTokenRequest tokenRequest:
-					return RequestRevokeTokenAsync(providerName, tokenRequest);
+					return RequestRevokeTokenAsync(providerName, tokenRequest, cancellationToken);
 
 				default:
 					throw new InvalidOperationException("Token request type not recognized.");
 			}
 		}
 
-		private Task<TokenResponse> RequestPasswordCredentialsTokenAsync(string providerName, PasswordCredentialsTokenRequest request)
+		private Task<TokenResponse> RequestPasswordCredentialsTokenAsync(string providerName, PasswordCredentialsTokenRequest request, CancellationToken cancellationToken)
 		{
-			return RequestTokenWithCachingAsync(providerName, request);
+			return RequestTokenWithCachingAsync(providerName, request, cancellationToken);
 		}
 
-		private Task<TokenResponse> RequestClientCredentialsTokenAsync(string providerName, ClientCredentialsTokenRequest request)
+		private Task<TokenResponse> RequestClientCredentialsTokenAsync(string providerName, ClientCredentialsTokenRequest request, CancellationToken cancellationToken)
 		{
-			return RequestTokenWithCachingAsync(providerName, request);
+			return RequestTokenWithCachingAsync(providerName, request, cancellationToken);
 		}
 
-		private async Task<TokenResponse> RequestRefreshTokenAsync(string providerName, RefreshTokenRequest request)
+		private async Task<TokenResponse> RequestRefreshTokenAsync(string providerName, RefreshTokenRequest request, CancellationToken cancellationToken)
 		{
 			var config = _tokenProviderConfigs.FirstOrDefault(o => o.ProviderName?.Equals(providerName, StringComparison.OrdinalIgnoreCase) ?? false);
 			if (config == null) throw new InvalidOperationException($"No token provider is setup with provider name '{providerName}'.");
@@ -72,7 +75,7 @@ namespace RestApi.Client.Authentication
 			_cachedRefreshTokensKeys.TryGetValue(request.RefreshToken, out var cacheKey);
 			RemoveFromCacheByRefreshToken(request.RefreshToken);
 
-			var tokenResponse = await PrivateTokenRequestAsync(request, config).ConfigureAwait(false);
+			var tokenResponse = await PrivateTokenRequestAsync(request, config, cancellationToken).ConfigureAwait(false);
 
 			if (!string.IsNullOrWhiteSpace(cacheKey))
 			{
@@ -86,7 +89,7 @@ namespace RestApi.Client.Authentication
 			return tokenResponse;
 		}
 
-		private Task<TokenResponse> RequestRevokeTokenAsync(string providerName, RevokeTokenRequest request)
+		private Task<TokenResponse> RequestRevokeTokenAsync(string providerName, RevokeTokenRequest request, CancellationToken cancellationToken)
 		{
 			var config = _tokenProviderConfigs.FirstOrDefault(o => o.ProviderName?.Equals(providerName, StringComparison.OrdinalIgnoreCase) ?? false);
 			if (config == null) throw new InvalidOperationException($"No token provider is setup with provider name '{providerName}'.");
@@ -109,10 +112,10 @@ namespace RestApi.Client.Authentication
 				RemoveFromCacheByCacheKey(cacheKey);
 			}
 
-			return PrivateTokenRequestAsync(request, config);
+			return PrivateTokenRequestAsync(request, config, cancellationToken);
 		}
 
-		private async Task<TokenResponse> RequestTokenWithCachingAsync(string providerName, TokenRequestBase request)
+		private async Task<TokenResponse> RequestTokenWithCachingAsync(string providerName, TokenRequestBase request, CancellationToken cancellationToken)
 		{
 			var config = _tokenProviderConfigs.FirstOrDefault(o => o.ProviderName?.Equals(providerName, StringComparison.OrdinalIgnoreCase) ?? false);
 			if (config == null) throw new InvalidOperationException($"No token provider is setup with provider name '{providerName}'.");
@@ -133,7 +136,7 @@ namespace RestApi.Client.Authentication
 					// if refresh token exists then get new token using refresh token 
 					if (!string.IsNullOrWhiteSpace(tokenResponse.RefreshToken))
 					{
-						tokenResponse = await PrivateRefreshTokenAsync(tokenResponse.RefreshToken, request, config).ConfigureAwait(false);
+						tokenResponse = await PrivateRefreshTokenAsync(tokenResponse.RefreshToken, request, config, cancellationToken).ConfigureAwait(false);
 					}
 				}
 			}
@@ -141,7 +144,7 @@ namespace RestApi.Client.Authentication
 			// if tokenResponse is null or we still not have access token or token response has error then try to get a new token
 			if (string.IsNullOrWhiteSpace(tokenResponse?.AccessToken) || tokenResponse.HasInvalidTokenError)
 			{
-				tokenResponse = await PrivateTokenRequestAsync(request, config).ConfigureAwait(false);
+				tokenResponse = await PrivateTokenRequestAsync(request, config, cancellationToken).ConfigureAwait(false);
 			}
 
 			if (tokenResponse.HasError)
@@ -155,11 +158,12 @@ namespace RestApi.Client.Authentication
 			return tokenResponse;
 		}
 
-		private async Task<TokenResponse> SendHttpRequestAsync(HttpRequestMessage requestMessage)
+		private async Task<TokenResponse> SendHttpRequestAsync(HttpRequestMessage requestMessage, CancellationToken cancellationToken)
 		{
+			cancellationToken.ThrowIfCancellationRequested();
 			try
 			{
-				using (var response = await _httpClient.SendAsync(requestMessage).ConfigureAwait(false))
+				using (var response = await _httpClient.SendAsync(requestMessage, cancellationToken).ConfigureAwait(false))
 				{
 					var tokenResponse = new TokenResponse();
 					string content = null;
@@ -202,17 +206,17 @@ namespace RestApi.Client.Authentication
 			}
 		}
 
-		private async Task<TokenResponse> PrivateTokenRequestAsync(TokenRequestBase request, TokenProviderConfig config)
+		private async Task<TokenResponse> PrivateTokenRequestAsync(TokenRequestBase request, TokenProviderConfig config, CancellationToken cancellationToken)
 		{
 			using (var requestMessage = request.BuildRequestTokenHttpRequestMessage(config))
 			{
-				return await SendHttpRequestAsync(requestMessage).ConfigureAwait(false);
+				return await SendHttpRequestAsync(requestMessage, cancellationToken).ConfigureAwait(false);
 			}
 		}
 
-		private Task<TokenResponse> PrivateRefreshTokenAsync(string refreshToken, TokenRequestBase request, TokenProviderConfig config)
+		private Task<TokenResponse> PrivateRefreshTokenAsync(string refreshToken, TokenRequestBase request, TokenProviderConfig config, CancellationToken cancellationToken)
 		{
-			return PrivateTokenRequestAsync(new RefreshTokenRequest(request, refreshToken), config);
+			return PrivateTokenRequestAsync(new RefreshTokenRequest(request, refreshToken), config, cancellationToken);
 		}
 
 		private void AddToCache(string cacheKey, TokenResponse tokenResponse)

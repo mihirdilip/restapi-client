@@ -3,17 +3,20 @@
 
 using System;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace RestApi.Client.Authentication
 {
 	public abstract class HeaderBasedRestAuthenticationHandler : IRestAuthenticationHandler
 	{
-		public async Task<bool> HandleAsync(HttpRequestMessage request)
+		public async Task<bool> HandleAsync(HttpRequestMessage request, CancellationToken cancellationToken = default)
 		{
+			cancellationToken.ThrowIfCancellationRequested();
+
 			if (request == null) throw new ArgumentNullException(nameof(request));
 
-			var headers = await GetHeadersAsync().ConfigureAwait(false);
+			var headers = await GetHeadersAsync(cancellationToken).ConfigureAwait(false);
 			if (headers == null) return true;
 
 			foreach (var header in headers)
@@ -25,6 +28,6 @@ namespace RestApi.Client.Authentication
 			return true;
 		}
 
-		protected abstract Task<RestHttpHeaders> GetHeadersAsync();
+		protected abstract Task<RestHttpHeaders> GetHeadersAsync(CancellationToken cancellationToken);
 	}
 }
