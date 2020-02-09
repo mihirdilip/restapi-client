@@ -12,7 +12,7 @@ namespace RestApi.Client
 {
 	internal interface IHttpContentHandler
 	{
-		Task<HttpContent> GetHttpContentAsync<TRequestContent>(string contentMediaType, TRequestContent content);
+		Task<HttpContent> GetHttpContentAsync<TRequestContent>(RestRequestContent<TRequestContent> content);
 		Task<TResponseContent> GetResponseContentAsync<TResponseContent>(HttpContent content);
 	}
 
@@ -33,11 +33,10 @@ namespace RestApi.Client
 			return serializer;
 		}
 
-		public async Task<HttpContent> GetHttpContentAsync<TRequestContent>(string contentMediaType, TRequestContent content)
+		public async Task<HttpContent> GetHttpContentAsync<TRequestContent>(RestRequestContent<TRequestContent> content)
 		{
-			if (string.IsNullOrWhiteSpace(contentMediaType)) return null;
-			if (content == null) return null; 
-			return await GetAndCheckSerializer(contentMediaType).GetHttpContentAsync(content).ConfigureAwait(false);
+			if (content == default || string.IsNullOrWhiteSpace(content.ContentMediaType)) return default;
+			return await GetAndCheckSerializer(content.ContentMediaType).GetHttpContentAsync(content).ConfigureAwait(false);
 		}
 
 		public async Task<TResponseContent> GetResponseContentAsync<TResponseContent>(HttpContent content)

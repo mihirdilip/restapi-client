@@ -22,16 +22,18 @@ namespace RestApi.Client
 
 		Task<IRestResponse> PostAsync(string url, CancellationToken cancellationToken = default);
 		Task<IRestResponse> PostAsync(string url, RestHttpHeaders headers, CancellationToken cancellationToken = default);
-		Task<IRestResponse> PostAsync<TRequestContent>(string url, TRequestContent content, string contentMediaType = default, CancellationToken cancellationToken = default);
-		Task<IRestResponse> PostAsync<TRequestContent>(string url, TRequestContent content, RestHttpHeaders headers, string contentMediaType = default, CancellationToken cancellationToken = default);
-		Task<IRestResponse<TResponseContent>> PostAsync<TResponseContent, TRequestContent>(string url, TRequestContent content, string contentMediaType = default, CancellationToken cancellationToken = default);
-		Task<IRestResponse<TResponseContent>> PostAsync<TResponseContent, TRequestContent>(string url, TRequestContent content, RestHttpHeaders headers, string contentMediaType = default, CancellationToken cancellationToken = default);
+		Task<IRestResponse> PostAsync<TRequestContent>(string url, RestRequestContent<TRequestContent> content, CancellationToken cancellationToken = default);
+		Task<IRestResponse> PostAsync<TRequestContent>(string url, RestRequestContent<TRequestContent> content, RestHttpHeaders headers, CancellationToken cancellationToken = default);
+		Task<IRestResponse<TResponseContent>> PostAsync<TResponseContent, TRequestContent>(string url, RestRequestContent<TRequestContent> content, CancellationToken cancellationToken = default);
+		Task<IRestResponse<TResponseContent>> PostAsync<TResponseContent, TRequestContent>(string url, RestRequestContent<TRequestContent> content, RestHttpHeaders headers, CancellationToken cancellationToken = default);
 
 
-		Task<IRestResponse> PutAsync<TRequestContent>(string url, TRequestContent content, string contentMediaType = default, CancellationToken cancellationToken = default);
-		Task<IRestResponse> PutAsync<TRequestContent>(string url, TRequestContent content, RestHttpHeaders headers, string contentMediaType = default, CancellationToken cancellationToken = default);
-		Task<IRestResponse<TResponseContent>> PutAsync<TResponseContent, TRequestContent>(string url, TRequestContent content, string contentMediaType = default, CancellationToken cancellationToken = default);
-		Task<IRestResponse<TResponseContent>> PutAsync<TResponseContent, TRequestContent>(string url, TRequestContent content, RestHttpHeaders headers, string contentMediaType = default, CancellationToken cancellationToken = default);
+		Task<IRestResponse> PutAsync(string url, CancellationToken cancellationToken = default);
+		Task<IRestResponse> PutAsync(string url, RestHttpHeaders headers, CancellationToken cancellationToken = default);
+		Task<IRestResponse> PutAsync<TRequestContent>(string url, RestRequestContent<TRequestContent> content, CancellationToken cancellationToken = default);
+		Task<IRestResponse> PutAsync<TRequestContent>(string url, RestRequestContent<TRequestContent> content, RestHttpHeaders headers, CancellationToken cancellationToken = default);
+		Task<IRestResponse<TResponseContent>> PutAsync<TResponseContent, TRequestContent>(string url, RestRequestContent<TRequestContent> content, CancellationToken cancellationToken = default);
+		Task<IRestResponse<TResponseContent>> PutAsync<TResponseContent, TRequestContent>(string url, RestRequestContent<TRequestContent> content, RestHttpHeaders headers, CancellationToken cancellationToken = default);
 
 
 		Task<IRestResponse> DeleteAsync(string url, CancellationToken cancellationToken = default);
@@ -42,11 +44,11 @@ namespace RestApi.Client
 
 		Task<IRestResponse> SendAsync(HttpMethod httpMethod, string url, CancellationToken cancellationToken = default);
 		Task<IRestResponse> SendAsync(HttpMethod httpMethod, string url, RestHttpHeaders headers, CancellationToken cancellationToken = default);
+		Task<IRestResponse> SendAsync<TRequestContent>(HttpMethod httpMethod, string url, RestRequestContent<TRequestContent> content, CancellationToken cancellationToken = default);
+		Task<IRestResponse> SendAsync<TRequestContent>(HttpMethod httpMethod, string url, RestRequestContent<TRequestContent> content, RestHttpHeaders headers, CancellationToken cancellationToken = default);
 		Task<IRestResponse<TResponseContent>> SendAsync<TResponseContent>(HttpMethod httpMethod, string url, CancellationToken cancellationToken = default);
 		Task<IRestResponse<TResponseContent>> SendAsync<TResponseContent>(HttpMethod httpMethod, string url, RestHttpHeaders headers, CancellationToken cancellationToken = default);
-		Task<IRestResponse> SendAsync<TRequestContent>(HttpMethod httpMethod, string url, TRequestContent content, string contentMediaType = default, CancellationToken cancellationToken = default);
-		Task<IRestResponse> SendAsync<TRequestContent>(HttpMethod httpMethod, string url, TRequestContent content, RestHttpHeaders headers, string contentMediaType = default, CancellationToken cancellationToken = default);
-		Task<IRestResponse<TResponseContent>> SendAsync<TResponseContent, TRequestContent>(HttpMethod httpMethod, string url, TRequestContent content, string contentMediaType = default, CancellationToken cancellationToken = default);
-		Task<IRestResponse<TResponseContent>> SendAsync<TResponseContent, TRequestContent>(HttpMethod httpMethod, string url, TRequestContent content, RestHttpHeaders headers, string contentMediaType = default, CancellationToken cancellationToken = default);
+		Task<IRestResponse<TResponseContent>> SendAsync<TResponseContent, TRequestContent>(HttpMethod httpMethod, string url, RestRequestContent<TRequestContent> content, CancellationToken cancellationToken = default);
+		Task<IRestResponse<TResponseContent>> SendAsync<TResponseContent, TRequestContent>(HttpMethod httpMethod, string url, RestRequestContent<TRequestContent> content, RestHttpHeaders headers, CancellationToken cancellationToken = default);
 	}
 }
