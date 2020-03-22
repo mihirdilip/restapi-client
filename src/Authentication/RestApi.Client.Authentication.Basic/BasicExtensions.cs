@@ -7,6 +7,12 @@ namespace RestApi.Client.Authentication
 {
 	public static class BasicExtensions
 	{
+		/// <summary>
+		/// Adds Basic authentication handling to the pipeline. This will send the Basic scheme authorization header with every request.
+		/// </summary>
+		/// <typeparam name="TBasicAuthenticationProvider">Implementation type inherited from <see cref="IBasicAuthenticationProvider"/>.</typeparam>
+		/// <param name="builder">The rest client builder.</param>
+		/// <returns>The rest client builder.</returns>
 		public static IRestClientBuilder AddBasicAuthentication<TBasicAuthenticationProvider>(this IRestClientBuilder builder)
 			where TBasicAuthenticationProvider : class, IBasicAuthenticationProvider
 		{

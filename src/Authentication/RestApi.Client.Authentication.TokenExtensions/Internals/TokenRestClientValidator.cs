@@ -23,7 +23,7 @@ namespace RestApi.Client.Authentication
 			{
 				if (group.Count() > 1)
 				{
-					throw new InvalidOperationException($"Multiple {nameof(TokenProviderConfig)} is not support for a same providerName '{group.Key}'.");
+					throw new InvalidOperationException($"Multiple {nameof(TokenProviderConfig)} is not support for a same provider name '{group.Key}'.");
 				}
 			}
 		}

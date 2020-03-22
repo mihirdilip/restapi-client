@@ -11,7 +11,7 @@ namespace RestApi.Client.Authentication
 		}
 
 		/// <summary>
-		/// Gets or sets the grant type. 
+		/// Gets the grant type. 
 		/// </summary>
 		public string GrantType { get; }
 
@@ -48,6 +48,9 @@ namespace RestApi.Client.Authentication
 		internal string ProviderName { get; set; }
 	}
 
+	/// <summary>
+	/// Client Credentials token provide config.
+	/// </summary>
 	public class ClientCredentialsTokenProviderConfig : TokenProviderConfig
 	{
 		public ClientCredentialsTokenProviderConfig() 
@@ -56,6 +59,9 @@ namespace RestApi.Client.Authentication
 		}
 	}
 
+	/// <summary>
+	/// Password Credentials token provider config.
+	/// </summary>
 	public class PasswordCredentialsTokenProviderConfig : TokenProviderConfig
 	{
 		public PasswordCredentialsTokenProviderConfig() 

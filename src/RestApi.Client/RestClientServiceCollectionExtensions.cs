@@ -8,6 +8,26 @@ namespace RestApi.Client
 {
 	public static class RestClientServiceCollectionExtensions
 	{
+		public static IServiceCollection AddRestClient(this IServiceCollection services, Uri baseAddress)
+		{
+			return AddRestClient(services, new RestClientOptions(baseAddress), null);
+		}
+
+		public static IServiceCollection AddRestClient(this IServiceCollection services, Uri baseAddress, Action<IRestClientBuilder> configure)
+		{
+			return AddRestClient(services, new RestClientOptions(baseAddress), configure);
+		}
+
+		public static IServiceCollection AddRestClient(this IServiceCollection services, Uri baseAddress, RestHttpHeaders defaultRequestHeaders)
+		{
+			return AddRestClient(services, new RestClientOptions(baseAddress, defaultRequestHeaders), null);
+		}
+
+		public static IServiceCollection AddRestClient(this IServiceCollection services, Uri baseAddress, RestHttpHeaders defaultRequestHeaders, Action<IRestClientBuilder> configure)
+		{
+			return AddRestClient(services, new RestClientOptions(baseAddress, defaultRequestHeaders), configure);
+		}
+
 		public static IServiceCollection AddRestClient(this IServiceCollection services, RestClientOptions options = null)
 		{
 			return AddRestClient(services, options, null);
@@ -18,22 +38,7 @@ namespace RestApi.Client
 			return AddRestClient(services, new RestClientOptions(), configure);
 		}
 
-		public static IServiceCollection AddRestClient(this IServiceCollection services, Uri baseAddress, RestHttpHeaders defaultRequestHeaders = null)
-		{
-			return AddRestClient(services, baseAddress, defaultRequestHeaders, null);
-		}
-
-		public static IServiceCollection AddRestClient(this IServiceCollection services, Uri baseAddress, Action<IRestClientBuilder> configure)
-		{
-			return AddRestClient(services, baseAddress, null, configure);
-		}
-
-		public static IServiceCollection AddRestClient(this IServiceCollection services, Uri baseAddress, RestHttpHeaders defaultRequestHeaders, Action<IRestClientBuilder> configure)
-		{
-			return AddRestClient(services, new RestClientOptions { BaseAddress = baseAddress, DefaultRequestHeaders = defaultRequestHeaders }, configure);
-		}
-
-		public static IServiceCollection AddRestClient(this IServiceCollection services, RestClientOptions options, Action<IRestClientBuilder> configure)
+		internal static IServiceCollection AddRestClient(this IServiceCollection services, RestClientOptions options, Action<IRestClientBuilder> configure)
 		{
 			if (services == null)
 			{

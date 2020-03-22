@@ -5,6 +5,13 @@ namespace RestApi.Client.ContentSerializer
 {
 	public static class JsonExtensions
 	{
+		/// <summary>
+		/// Adds Json (application/json) content media type handling to the pipeline.
+		/// This will process the request content to be serialized as Json when sending to the server
+		/// and also, handle the response from the server with content type of Json.
+		/// </summary>
+		/// <param name="builder">The rest client builder.</param>
+		/// <returns>The rest client builder.</returns>
 		public static IRestClientBuilder AddJsonHttpContentSerializer(this IRestClientBuilder builder)
 		{
 			builder.AddHttpContentSerializer<JsonHttpContentSerializer>();

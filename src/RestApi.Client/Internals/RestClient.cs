@@ -209,8 +209,7 @@ namespace RestApi.Client
 
 		public void Dispose()
 		{
-			// DO NOT DISPOSE HTTP CLIENT AS HTTP CLIENT IS SINGLETON
-			//_httpClient?.Dispose();
+			_httpClient?.Dispose();
 		}
 
 

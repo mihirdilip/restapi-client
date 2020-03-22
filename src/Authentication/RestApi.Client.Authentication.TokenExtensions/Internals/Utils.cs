@@ -9,25 +9,19 @@ namespace RestApi.Client.Authentication
 {
 	static class Utils
 	{
-		internal static AuthenticationHeaderValue GetBasicAuthenticationOAuth2SpecHeaderValue(string clientId, string clientSecret)
+		internal static AuthenticationHeaderValue GetBasicAuthenticationOAuth2SpecHeaderValue(string username, string password)
 		{
-			if (string.IsNullOrWhiteSpace(clientId)) throw new ArgumentNullException(nameof(clientId));
-			if (clientSecret == null) clientSecret = "";
-
-            return new AuthenticationHeaderValue(
-	            Constants.BasicScheme, 
-	            Convert.ToBase64String(Encoding.UTF8.GetBytes($"{UrlEncoded(clientId)}:{UrlEncoded(clientSecret)}"))
-	        );
+			return GetBasicAuthenticationHeaderValue(UrlEncoded(username), UrlEncoded(password));
         }
 
-		internal static AuthenticationHeaderValue GetBasicAuthenticationHeaderValue(string clientId, string clientSecret)
+		internal static AuthenticationHeaderValue GetBasicAuthenticationHeaderValue(string username, string password)
 		{
-			if (string.IsNullOrWhiteSpace(clientId)) throw new ArgumentNullException(nameof(clientId));
-			if (clientSecret == null) clientSecret = "";
+			if (string.IsNullOrWhiteSpace(username)) throw new ArgumentNullException(nameof(username));
+			if (password == null) password = string.Empty;
 
 			return new AuthenticationHeaderValue(
 				Constants.BasicScheme,
-				Convert.ToBase64String(Encoding.UTF8.GetBytes($"{clientId}:{clientSecret}"))
+				Convert.ToBase64String(Encoding.UTF8.GetBytes($"{username}:{password}"))
 			);
 		}
 

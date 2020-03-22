@@ -4,7 +4,7 @@
 namespace RestApi.Client.Authentication
 {
 	/// <summary>
-	/// Default values used by OAuth2 authentication.
+	/// Default values used by OAuth 2.0 authentication.
 	/// </summary>
 	internal static class OAuth2Defaults
 	{

@@ -6,6 +6,9 @@ using System;
 
 namespace RestApi.Client.Authentication
 {
+    /// <summary>
+    /// The response received for token request.
+    /// </summary>
     public class TokenResponse 
     {
 	    private const int TokenExpiryToleranceInSeconds = 60;
