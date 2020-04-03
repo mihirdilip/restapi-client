@@ -1,5 +1,8 @@
 ﻿namespace RestApi.Client
 {
+	/// <summary>
+	/// Typed list of content media mime types.
+	/// </summary>
 	public static class MediaMimeTypes
 	{
 		public static class Application

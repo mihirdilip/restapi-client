@@ -3,6 +3,9 @@
 
 namespace RestApi.Client.Authentication
 {
+	/// <summary>
+	/// An abstract token provider config.
+	/// </summary>
 	public abstract class TokenProviderConfig 
 	{
 		protected TokenProviderConfig(string grantType)

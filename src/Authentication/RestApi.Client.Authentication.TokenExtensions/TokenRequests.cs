@@ -8,15 +8,29 @@ using System.Net.Http.Headers;
 
 namespace RestApi.Client.Authentication
 {
+    /// <summary>
+    /// An interface for token request.
+    /// </summary>
     public interface ITokenRequest
     {
+	    /// <summary>
+	    /// Space separated list of the requested scope. This will override the default scope set when configuring the provider.
+	    /// </summary>
+	    string OverrideScope { get; }
+
+	    /// <summary>
+	    /// Gets or sets extra parameters to be sent in the body of the request.
+	    /// </summary>
+	    IDictionary<string, string> ExtraBodyParameters { get; }
     }
 
+    /// <summary>
+    /// Abstract token request base.
+    /// </summary>
     public abstract class TokenRequestBase : ITokenRequest
     {
 	    protected TokenRequestBase()
 	    {
-		    
 	    }
 
 	    protected TokenRequestBase(TokenRequestBase other)
@@ -153,6 +167,11 @@ namespace RestApi.Client.Authentication
     /// </summary>
     public class PasswordCredentialsTokenRequest : TokenRequestBase
     {
+        /// <summary>
+        /// Creates an instance of password credentials token request using username and password.
+        /// </summary>
+        /// <param name="username">The username.</param>
+        /// <param name="password">The password.</param>
 	    public PasswordCredentialsTokenRequest(string username, string password)
 	    {
             if (string.IsNullOrWhiteSpace(username)) throw new ArgumentNullException(nameof(username));
@@ -162,14 +181,8 @@ namespace RestApi.Client.Authentication
 		    Password = password;
 	    }
 
-        /// <summary>
-        /// Gets the name of the user.
-        /// </summary>
         internal string Username { get; }
 
-        /// <summary>
-        /// Gets the password.
-        /// </summary>
         internal string Password { get; }
 
         internal override string BuildCacheKey(string providerName, TokenProviderConfig config)
@@ -197,6 +210,10 @@ namespace RestApi.Client.Authentication
     /// </summary>
     public class RefreshTokenRequest : TokenRequestBase
     {
+        /// <summary>
+        /// Creates a refresh token request.
+        /// </summary>
+        /// <param name="refreshToken">The refresh token.</param>
 	    public RefreshTokenRequest(string refreshToken)
 	    {
             if (string.IsNullOrWhiteSpace(refreshToken)) throw new ArgumentNullException(nameof(refreshToken));
@@ -213,9 +230,6 @@ namespace RestApi.Client.Authentication
             RefreshToken = refreshToken;
 		}
 
-		/// <summary>
-		/// Gets the refresh token.
-		/// </summary>
 		internal string RefreshToken { get; }
 
         internal override string BuildCacheKey(string providerName, TokenProviderConfig config)
@@ -238,6 +252,11 @@ namespace RestApi.Client.Authentication
     /// </summary>
     public class RevokeTokenRequest : TokenRequestBase
     {
+        /// <summary>
+        /// Creates the revoke token request.
+        /// </summary>
+        /// <param name="token">The token to be revoked.</param>
+        /// <param name="tokenType">The type of the token.</param>
 	    public RevokeTokenRequest(string token, TokenTypes tokenType = TokenTypes.AccessToken)
 	    {
 		    if (string.IsNullOrWhiteSpace(token)) throw new ArgumentNullException(nameof(token));
@@ -246,10 +265,6 @@ namespace RestApi.Client.Authentication
 		    TokenType = tokenType;
 	    }
 
-
-	    /// <summary>
-	    /// Gets the token.
-	    /// </summary>
 	    internal string Token { get; }
 
         internal TokenTypes TokenType { get; }
@@ -289,6 +304,9 @@ namespace RestApi.Client.Authentication
 	    }
     }
 
+    /// <summary>
+    /// Types of token.
+    /// </summary>
     public enum TokenTypes
     {
         AccessToken,
