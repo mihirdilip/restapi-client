@@ -54,7 +54,7 @@ PM> Install-Package RestApi.Client.Authentication.<AuthenticationType>
 # where: <AuthenticationType> is any of the above listed type.
 ```
 
-You can also add your own custom authentication to the pipeline. To add your custom authentication handler all .
+You can also add your own authentication handler to the pipeline. Please refer [Extending](#extending) section.
 
 Note: Only downloading Authentication package without *RestApi.Client* will be of no use so make sure you have downloaded *RestApi.Client* package as well.
 
@@ -80,61 +80,10 @@ Note: If for any reason if you get a **circular dependency errors**, use `IRestT
 
 ## Example Usage
 
-Setting it up is quite simple. You will need basic working knowledge of ASP.NET Core to get started using this code.
-
-When using with ASP.NET Core we can use the extension method for adding `IRestClient` to the depencency
-
-On [**Startup.cs**](#startupcs), as shown below, add following lines in *ConfigureServices* method ``. 
+Example usage for all the available Authentication types can be found here.
+[authentication-clientside-samples](https://github.com/mihirdilip/authentication-clientside-samples)
 
 
-#### Startup.cs
-
-
-
-
-```C#
-using RestApi.Client;
-public class Startup
-{
-	// ... 
-
-	public void ConfigureServices(IServiceCollection services)
-	{
-		
-
-		// ... 
-	}
-
-	// ... 
-}
-
-// ... represents code is removed to keep it concise
-```
-
-Console or other standalone app 
-```C#
-using RestApi.Client;
-using RestApi.Client.Authentication;
-class Program
-{
-    private const ApiKeyIn ApiKeyIn = ClientSide.ApiKeyIn.Header;
-
-    static async Task Main(string[] args)
-    {
-        var clientBuilder = new RestClientBuilder()
-            .SetBaseAddress(new Uri(Constants.BaseUrl));
-            .
-
-        var client = clientBuilder.Build();
-
-        // client can then be used for make any api calls
-
-        Console.ReadKey();
-    }
-}
-
-// ... represents code is removed to keep it concise
-```
 
 ## License
 [MIT License](https://github.com/mihirdilip/restapi-client/blob/master/LICENSE)
