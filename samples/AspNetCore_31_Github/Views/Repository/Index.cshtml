@@ -1,0 +1,17 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+@model List<Repository>
+
+<div class="text-center">
+    <h1 class="display-4">Repositories</h1>
+
+	<ul>
+	@foreach (var repository in Model)
+    {
+	    <li>
+			<a href="@repository.Html_Url">@repository.Name</a>
+	    </li>
+    }
+	</ul>
+</div>
