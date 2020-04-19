@@ -16,7 +16,7 @@ namespace RestApi.Client.Authentication
 		public static IRestClientBuilder AddBearerAuthentication<TBearerAuthenticationProvider>(this IRestClientBuilder builder)
 			where TBearerAuthenticationProvider : class, IBearerAuthenticationProvider
 		{
-			builder.Services.AddScoped<IBearerAuthenticationProvider, TBearerAuthenticationProvider>();
+			builder.Services.AddSingleton<IBearerAuthenticationProvider, TBearerAuthenticationProvider>();
 			builder.AddAuthenticationHandler<BearerAuthenticationHandler>();
 			return builder;
 		}

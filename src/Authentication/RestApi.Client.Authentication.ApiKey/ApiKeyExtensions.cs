@@ -16,7 +16,7 @@ namespace RestApi.Client.Authentication
 		public static IRestClientBuilder AddApiKeyInHeaderAuthentication<TApiKeyAuthenticationProvider>(this IRestClientBuilder builder)
 			where TApiKeyAuthenticationProvider : class, IApiKeyAuthenticationProvider
 		{
-			builder.Services.AddScoped<IApiKeyAuthenticationProvider, TApiKeyAuthenticationProvider>();
+			builder.Services.AddSingleton<IApiKeyAuthenticationProvider, TApiKeyAuthenticationProvider>();
 			builder.AddAuthenticationHandler<ApiKeyInHeaderAuthenticationHandler>();
 			return builder;
 		}
@@ -30,7 +30,7 @@ namespace RestApi.Client.Authentication
 		public static IRestClientBuilder AddApiKeyInQueryParamsAuthentication<TApiKeyAuthenticationProvider>(this IRestClientBuilder builder)
 			where TApiKeyAuthenticationProvider : class, IApiKeyAuthenticationProvider
 		{
-			builder.Services.AddScoped<IApiKeyAuthenticationProvider, TApiKeyAuthenticationProvider>();
+			builder.Services.AddSingleton<IApiKeyAuthenticationProvider, TApiKeyAuthenticationProvider>();
 			builder.AddAuthenticationHandler<ApiKeyInQueryParamsAuthenticationHandler>();
 			return builder;
 		}

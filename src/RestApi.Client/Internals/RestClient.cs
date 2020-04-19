@@ -1,10 +1,10 @@
 ﻿// Copyright (c) Mihir Dilip. All rights reserved.
 // Licensed under the MIT License. See License in the project root for license information.
 
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using RestApi.Client.Authentication;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Net.Http;
 using System.Threading;
@@ -19,7 +19,7 @@ namespace RestApi.Client
 		private readonly IHttpContentHandler _bodyContentHandler;
 		private readonly IRestAuthenticationHandler _restAuthenticationHandler;
 
-		public RestClient(IOptions<RestClientOptions> options, IServiceProvider serviceProvider, IHttpClientFactory httpClientFactory, IHttpContentHandler bodyContentHandler, IRestAuthenticationHandler restAuthenticationHandler)
+		public RestClient(IOptions<RestClientOptions> options, IServiceProvider serviceProvider, IHttpClientFactory httpClientFactory, IHttpContentHandler bodyContentHandler, IRestAuthenticationHandler restAuthenticationHandler, IEnumerable<IRestClientValidator> restClientValidators)
 		{
 			_options = options.Value;
 			_httpClient = httpClientFactory.CreateClient();
@@ -27,7 +27,7 @@ namespace RestApi.Client
 			_bodyContentHandler = bodyContentHandler;
 			_restAuthenticationHandler = restAuthenticationHandler;
 
-			ValidateInstance();
+			ValidateInstance(restClientValidators);
 		}
 
 		[EditorBrowsable(EditorBrowsableState.Never)]
@@ -216,9 +216,8 @@ namespace RestApi.Client
 
 
 
-		private void ValidateInstance()
+		private void ValidateInstance(IEnumerable<IRestClientValidator> validators)
 		{
-			var validators = ServiceProvider.GetServices<IRestClientValidator>();
 			if (validators != null)
 			{
 				foreach (var validator in validators)

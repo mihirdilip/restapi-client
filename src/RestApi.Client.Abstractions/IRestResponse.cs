@@ -39,11 +39,6 @@ namespace RestApi.Client
 		HttpResponseHeaders Headers { get; }
 
 		/// <summary>
-		/// Gets response content headers.
-		/// </summary>
-		HttpContentHeaders ContentHeaders { get; }
-
-		/// <summary>
 		/// Get the problem details. It contains any errors returned in response.
 		/// </summary>
 		ValidationProblemDetails ProblemDetails { get; }
@@ -59,5 +54,10 @@ namespace RestApi.Client
 		/// Gets the response content.
 		/// </summary>
 		TResponseContent Content { get; }
+
+		/// <summary>
+		/// Gets response content headers.
+		/// </summary>
+		HttpContentHeaders ContentHeaders { get; }
 	}
 }

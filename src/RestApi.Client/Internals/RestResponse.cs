@@ -21,11 +21,9 @@ namespace RestApi.Client
 			{
 				StatusCode = response.StatusCode,
 				Headers = response.Headers,
-				ContentHeaders = response.Content?.Headers,
 				IsSuccessStatusCode = response.IsSuccessStatusCode,
 				ReasonPhrase = response.ReasonPhrase,
 				Version = response.Version,
-				//HttpContent = response.Content,
 				ProblemDetails = !response.IsSuccessStatusCode ? await bodyContentHandler.GetResponseContentAsync<ValidationProblemDetails>(response.Content).ConfigureAwait(false) : null
 			};
 
@@ -41,16 +39,10 @@ namespace RestApi.Client
 		public Version Version { get; protected set; }
 		public bool IsSuccessStatusCode { get; protected set; }
 		public HttpResponseHeaders Headers { get; protected set; }
-		public HttpContentHeaders ContentHeaders { get; protected set; }
 		public ValidationProblemDetails ProblemDetails { get; protected set; }
-
-		//public HttpContent HttpContent { get; protected set; }
-		//public virtual object Content { get; private set; }
 
 		public virtual void Dispose()
 		{
-			//HttpContent?.Dispose();
-			//(Content as IDisposable)?.Dispose();
 		}
 	}
 
@@ -81,6 +73,7 @@ namespace RestApi.Client
 		}
 
 		public TResponseContent Content { get; private set; }
+		public HttpContentHeaders ContentHeaders { get; protected set; }
 
 		public override void Dispose()
 		{

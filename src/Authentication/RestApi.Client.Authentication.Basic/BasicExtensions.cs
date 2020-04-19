@@ -16,7 +16,7 @@ namespace RestApi.Client.Authentication
 		public static IRestClientBuilder AddBasicAuthentication<TBasicAuthenticationProvider>(this IRestClientBuilder builder)
 			where TBasicAuthenticationProvider : class, IBasicAuthenticationProvider
 		{
-			builder.Services.AddScoped<IBasicAuthenticationProvider, TBasicAuthenticationProvider>();
+			builder.Services.AddSingleton<IBasicAuthenticationProvider, TBasicAuthenticationProvider>();
 			builder.AddAuthenticationHandler<BasicAuthenticationHandler>();
 			return builder;
 		}

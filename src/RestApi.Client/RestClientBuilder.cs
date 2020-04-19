@@ -184,7 +184,7 @@ namespace RestApi.Client
 			where TRestAuthenticationHandlerImplementation : class, IRestAuthenticationHandler
 		{
 			ClearAuthenticationHandler();
-			Services.AddScoped<IRestAuthenticationHandler, TRestAuthenticationHandlerImplementation>();
+			Services.AddSingleton<IRestAuthenticationHandler, TRestAuthenticationHandlerImplementation>();
 			return this;
 		}
 

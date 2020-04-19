@@ -16,7 +16,7 @@ namespace RestApi.Client.Authentication
 		public static IRestClientBuilder AddOAuth2Authentication<TOAuth2AuthenticationProvider>(this IRestClientBuilder builder)
 			where TOAuth2AuthenticationProvider : class, IOAuth2AuthenticationProvider
 		{
-			builder.Services.AddScoped<IOAuth2AuthenticationProvider, TOAuth2AuthenticationProvider>();
+			builder.Services.AddSingleton<IOAuth2AuthenticationProvider, TOAuth2AuthenticationProvider>();
 			builder.AddAuthenticationHandler<OAuth2AuthenticationHandler>();
 			return builder;
 		}
