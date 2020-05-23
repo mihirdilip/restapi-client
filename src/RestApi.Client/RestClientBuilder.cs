@@ -148,7 +148,7 @@ namespace RestApi.Client
 		}
 
 		/// <summary>
-		/// Adds your custom http content serializer <see cref="IHttpContentSerializer"/> to the pipeline.
+		/// Adds your custom http content serializer <see cref="IHttpContentSerializer"/> to the pipeline as singleton.
 		/// <para>Common content serializers available to download as NuGet packages (RestApi.Client.ContentSerializer.*) which can be added to the pipeline.</para>
 		/// Content serializer takes care of the request/response content serialization depending on the content type.
 		/// </summary>
@@ -173,7 +173,7 @@ namespace RestApi.Client
 		}
 
 		/// <summary>
-		/// Adds your custom authentication handler <see cref="IRestAuthenticationHandler"/> to the pipeline or replaces the exiting authentication handler if already added before.
+		/// Adds your custom authentication handler <see cref="IRestAuthenticationHandler"/> to the pipeline as singleton or replaces the exiting authentication handler if already added before.
 		/// A <see cref="IRestClient"/> can only have one authentication handler at a time.
 		/// <para>Common authentication handlers are available to download as NuGet packages (RestApi.Client.Authentication.*) which can be added to the pipeline.</para>
 		/// Authentication handler takes care of the authenticating all the request sent by the <see cref="IRestClient"/>.
@@ -212,7 +212,7 @@ namespace RestApi.Client
 		}
 
 		/// <summary>
-		/// Replaces the default implementation of <see cref="IRestClient"/> with your custom implementation.
+		/// Replaces the default implementation of <see cref="IRestClient"/> with your custom implementation and adds to the dependency container as a singleton.
 		/// </summary>
 		/// <typeparam name="TRestClientImplementation">Your custom rest client which implements <see cref="IRestClient"/>.</typeparam>
 		/// <returns>Current rest client builder.</returns>

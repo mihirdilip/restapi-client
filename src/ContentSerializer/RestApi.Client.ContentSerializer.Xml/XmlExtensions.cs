@@ -6,7 +6,7 @@ namespace RestApi.Client.ContentSerializer
 	public static class XmlExtensions
 	{
 		/// <summary>
-		/// Adds Xml (text/xml and application/xml) content media type handling to the pipeline.
+		/// Adds Xml (text/xml and application/xml) content media type handling to the pipeline as a singleton implementation.
 		/// This will process the request content to be serialized as Xml when sending to the server
 		/// and also, handle the response from the server with content type of Xml.
 		/// </summary>

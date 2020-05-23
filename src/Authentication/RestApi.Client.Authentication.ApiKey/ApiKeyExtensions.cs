@@ -8,7 +8,7 @@ namespace RestApi.Client.Authentication
 	public static class ApiKeyExtensions
 	{
 		/// <summary>
-		/// Adds API Key authentication handling to the pipeline. This will send the API Key in the header of a request.
+		/// Adds API Key authentication handling to the pipeline as a singleton implementation. This will send the API Key in the header of a request.
 		/// </summary>
 		/// <typeparam name="TApiKeyAuthenticationProvider">Implementation type inherited from <see cref="IApiKeyAuthenticationProvider"/>.</typeparam>
 		/// <param name="builder">The rest client builder.</param>
@@ -22,7 +22,7 @@ namespace RestApi.Client.Authentication
 		}
 
 		/// <summary>
-		/// Adds API Key authentication handling to the pipeline. This will send the API Key as query parameter on a request.
+		/// Adds API Key authentication handling to the pipeline as a singleton implementation. This will send the API Key as query parameter on a request.
 		/// </summary>
 		/// <typeparam name="TApiKeyAuthenticationProvider">Implementation type inherited from <see cref="IApiKeyAuthenticationProvider"/>.</typeparam>
 		/// <param name="builder">The rest client builder.</param>

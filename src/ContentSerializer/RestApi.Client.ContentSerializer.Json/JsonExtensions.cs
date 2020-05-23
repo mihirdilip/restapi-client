@@ -6,7 +6,7 @@ namespace RestApi.Client.ContentSerializer
 	public static class JsonExtensions
 	{
 		/// <summary>
-		/// Adds Json (application/json) content media type handling to the pipeline.
+		/// Adds Json (application/json) content media type handling to the pipeline as a singleton implementation.
 		/// This will process the request content to be serialized as Json when sending to the server
 		/// and also, handle the response from the server with content type of Json.
 		/// </summary>

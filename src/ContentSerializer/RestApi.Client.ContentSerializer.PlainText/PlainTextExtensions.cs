@@ -6,7 +6,7 @@ namespace RestApi.Client.ContentSerializer
 	public static class PlainTextExtensions
 	{
 		/// <summary>
-		/// Adds Plain Text (text/plain) content media type handling to the pipeline.
+		/// Adds Plain Text (text/plain) content media type handling to the pipeline as a singleton implementation.
 		/// This will process the request content to be serialized as Plain Text when sending to the server
 		/// and, also handle the response from the server with content type of Plain Text.
 		/// </summary>

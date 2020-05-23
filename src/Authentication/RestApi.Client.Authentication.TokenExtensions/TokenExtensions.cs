@@ -13,7 +13,7 @@ namespace RestApi.Client.Authentication
 		private static bool _addTokenProviderSetOnce = false;
 
 		/// <summary>
-		/// Adds a default token provider to the pipeline.
+		/// Adds a default token provider to the pipeline as a singleton implementation.
 		/// This will be used as a default token provider by the pipeline when processing token request.
 		/// </summary>
 		/// <param name="builder">The rest client builder.</param>
@@ -25,7 +25,7 @@ namespace RestApi.Client.Authentication
 		}
 
 		/// <summary>
-		/// Adds a token provider with a specific <paramref name="providerName"/> to the pipeline.
+		/// Adds a token provider with a specific <paramref name="providerName"/> to the pipeline as a singleton implementation.
 		/// This will be used as a token provider by the pipeline when processing token request with a specific <paramref name="providerName"/>.
 		/// </summary>
 		/// <param name="builder">The rest client builder.</param>

@@ -8,7 +8,7 @@ namespace RestApi.Client.Authentication
 	public static class OAuth2Extensions
 	{
 		/// <summary>
-		/// Adds OAuth 2.0 authentication handling to the pipeline. This will send the bearer token in the Authorization header of a request.
+		/// Adds OAuth 2.0 authentication handling to the pipeline as a singleton implementation. This will send the bearer token in the Authorization header of a request.
 		/// </summary>
 		/// <typeparam name="TOAuth2AuthenticationProvider">Implementation type inherited from <see cref="IOAuth2AuthenticationProvider"/>.</typeparam>
 		/// <param name="builder">The rest client builder.</param>
