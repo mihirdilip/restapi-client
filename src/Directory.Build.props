@@ -1,21 +1,23 @@
 <Project>
 
 	<PropertyGroup>
-		<TargetFramework>netstandard2.0</TargetFramework>
-	</PropertyGroup>
-
-	<PropertyGroup>
-		<Version>2.2.0-preview.8</Version>
-		<Copyright>Copyright (c) 2020 Mihir Dilip</Copyright>
-		<Authors>Mihir Dilip</Authors>
-		<Company>Mihir Dilip</Company>
+    <Version>5.0.0-preview.1</Version>
+    <PackageReleaseNotes>- Multi target framework added</PackageReleaseNotes>
+    <TargetFrameworks>net5.0;netcoreapp3.1;netstandard2.1;netstandard2.0;net461</TargetFrameworks>
 		<Description>Rest API client for easy access to restful API within your application.</Description>
 		<PackageTags>api, api-client, dotnet-api-client, restapi, restapi-client, rest-api, rest-api-client, rest-client, dotnet-rest-client, restfulapi, restful-api, restful-api-client, dotnet-restful-client, restapi-client-authentication, restapi-client-contentserializer, dotnet, dotnetcore, dotnet-core, net5, aspnetcore, netstandard, security, authentication, microsoft, microsoft.aspnetcore.authentication, microsoft-aspnetcore-authentication, microsoft.aspnetcore.authentication.apikey, microsoft-aspnetcore-authentication-apikey, asp-net-core, netstandard, netstandard20, apikey-authentication, api-key-authentication, apikeyauthentication, dotnetcore, asp-net-core-apikey-authentication, aspnetcore-apikey-authentication, asp-net-core-authentication, aspnetcore-authentication, asp, aspnet, apikey, api-key, authentication-scheme, basic-authentication, bearer, bearer-token, bearer-token-authentication, oauth, oauth2, oauth2-authentication, windows-authentication, restapi-client-authentication-apikey, restapi-client-authentication-basic, restapi-client-authentication-bearer, restapi-client-authentication-oauth2, restapi-client-authentication.windows, restapi-client-contentserializer-json, restapi-client-contentserializer-xml, restapi-client-contentserializer-plaintext</PackageTags>
-		<PackageProjectUrl>https://github.com/mihirdilip/restapi-client</PackageProjectUrl>
-		<RepositoryUrl>https://github.com/mihirdilip/restapi-client</RepositoryUrl>
-		<RepositoryType>GitHub</RepositoryType>
-		<PackageLicenseFile>LICENSE</PackageLicenseFile>
-		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <Copyright>Copyright (c) 2021 Mihir Dilip</Copyright>
+		<Authors>Mihir Dilip</Authors>
+		<Company>Mihir Dilip</Company>
+    <RepositoryUrl>https://github.com/mihirdilip/restapi-client/tree/$(Version)</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/mihirdilip/restapi-client/tree/$(Version)</PackageProjectUrl>
+    <Title>$(AssemblyName)</Title>
+    <RepositoryType>git</RepositoryType>
+    <PackageIconUrl />
+    <NeutralLanguage />
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)'=='Release'">
@@ -23,6 +25,7 @@
 	</PropertyGroup>
 
   <PropertyGroup>
+    <!-- Strong Name Key -->
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)key.snk</AssemblyOriginatorKeyFile>
     <DelaySign>false</DelaySign>

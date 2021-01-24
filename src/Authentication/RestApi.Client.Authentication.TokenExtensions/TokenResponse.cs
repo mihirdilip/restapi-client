@@ -1,8 +1,8 @@
 ﻿// Copyright (c) Mihir Dilip. All rights reserved.
 // Licensed under the MIT License. See License in the project root for license information.
 
-using Newtonsoft.Json;
 using System;
+using System.Text.Json.Serialization;
 
 namespace RestApi.Client.Authentication
 {
@@ -17,49 +17,49 @@ namespace RestApi.Client.Authentication
         /// <summary>
         /// Gets the access token.
         /// </summary>
-        [JsonProperty(OidcConstants.TokenResponse.AccessToken)]
+        [JsonPropertyName(OidcConstants.TokenResponse.AccessToken)]
         public string AccessToken { get; internal set; }
 
         /// <summary>
         /// Gets the identity token.
         /// </summary>
-        [JsonProperty(OidcConstants.TokenResponse.IdentityToken)]
+        [JsonPropertyName(OidcConstants.TokenResponse.IdentityToken)]
         public string IdentityToken { get; internal set; }
 
         /// <summary>
         /// Gets the type of the token.
         /// </summary>
-        [JsonProperty(OidcConstants.TokenResponse.TokenType)]
+        [JsonPropertyName(OidcConstants.TokenResponse.TokenType)]
         public string TokenType { get; internal set; }
 
         /// <summary>
         /// Gets the refresh token.
         /// </summary>
-        [JsonProperty(OidcConstants.TokenResponse.RefreshToken)]
+        [JsonPropertyName(OidcConstants.TokenResponse.RefreshToken)]
         public string RefreshToken { get; internal set; }
 
         /// <summary>
         /// Gets the error.
         /// </summary>
-        [JsonProperty(OidcConstants.TokenResponse.Error)]
+        [JsonPropertyName(OidcConstants.TokenResponse.Error)]
         public string Error { get; internal set; }
 
         /// <summary>
         /// Gets the error description.
         /// </summary>
-        [JsonProperty(OidcConstants.TokenResponse.ErrorDescription)]
+        [JsonPropertyName(OidcConstants.TokenResponse.ErrorDescription)]
         public string ErrorDescription { get; internal set; }
 
         /// <summary>
         /// Gets the error uri.
         /// </summary>
-        [JsonProperty(OidcConstants.TokenResponse.ErrorUri)]
+        [JsonPropertyName(OidcConstants.TokenResponse.ErrorUri)]
         public string ErrorUri { get; internal set; }
 
         /// <summary>
         /// Gets the expires in (seconds).
         /// </summary>
-        [JsonProperty(OidcConstants.TokenResponse.ExpiresIn)]
+        [JsonPropertyName(OidcConstants.TokenResponse.ExpiresIn)]
         public int ExpiresIn { get; internal set; }
 
         /// <summary>

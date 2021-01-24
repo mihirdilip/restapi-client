@@ -1,18 +1,18 @@
 ﻿// Copyright (c) Mihir Dilip. All rights reserved.
 // Licensed under the MIT License. See License in the project root for license information.
 
-using Newtonsoft.Json;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace RestApi.Client.Authentication
 {
-	internal interface ITokenService : IDisposable
+    internal interface ITokenService : IDisposable
 	{
 		Task<TokenResponse> ProcessRequestAsync(string providerName, ITokenRequest request, CancellationToken cancellationToken);
 	}
@@ -174,7 +174,7 @@ namespace RestApi.Client.Authentication
 						{
 							try
 							{
-								tokenResponse = JsonConvert.DeserializeObject<TokenResponse>(content);
+								tokenResponse = JsonSerializer.Deserialize<TokenResponse>(content);
 							}
 							catch (Exception e)
 							{
