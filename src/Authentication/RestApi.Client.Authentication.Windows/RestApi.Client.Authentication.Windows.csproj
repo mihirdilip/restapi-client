@@ -4,7 +4,7 @@
 		<None Remove="*.csproj.DotSettings" />
 	</ItemGroup>
   
-	<ItemGroup Condition="'$(TargetFramework)' == 'net461' Or '$(TargetFramework)' == 'netstandard2.0' Or '$(TargetFramework)' == 'netstandard2.1'">
+	<ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.1' Or '$(TargetFramework)' == 'netstandard2.0' Or '$(TargetFramework)' == 'net461'">
     <PackageReference Include="Microsoft.Extensions.Http" Version="5.0.0" />
   </ItemGroup>
 
