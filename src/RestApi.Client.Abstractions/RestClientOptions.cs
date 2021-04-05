@@ -1,14 +1,16 @@
 ﻿// Copyright (c) Mihir Dilip. All rights reserved.
 // Licensed under the MIT License. See License in the project root for license information.
 
+using RestApi.Client.ContentSerializer;
 using System;
+using System.Collections.Generic;
 
 namespace RestApi.Client
 {
 	/// <summary>
 	/// Options for <see cref="IRestClient"/>
 	/// </summary>
-	public class RestClientOptions 
+	public class RestClientOptions
 	{
 		/// <summary>
 		/// Create an instance of <see cref="RestClientOptions"/>.
@@ -55,5 +57,66 @@ namespace RestApi.Client
 		/// Gets or sets the default request headers to be used by all the requests made by <see cref="IRestClient"/>.
 		/// </summary>
 		public RestHttpHeaders DefaultRequestHeaders { get; set; } = new RestHttpHeaders();
+
+
+		internal readonly List<IHttpContentSerializer> HttpContentSerializers = new();
+		internal readonly List<Type> HttpContentSerializerImplementationTypes = new();
+		
+		public void AddHttpContentSerializer<THttpContentSerializerImplementation>()
+			where THttpContentSerializerImplementation : class, IHttpContentSerializer
+		{
+			var type = typeof(THttpContentSerializerImplementation);
+			if (!HttpContentSerializerImplementationTypes.Contains(type))
+			{
+				HttpContentSerializerImplementationTypes.Add(type);
+			}
+		}
+
+		public void AddHttpContentSerializer(IHttpContentSerializer httpContentSerializer)
+		{
+			if (httpContentSerializer == null) throw new ArgumentNullException(nameof(httpContentSerializer));
+			if (!HttpContentSerializers.Contains(httpContentSerializer))
+			{
+				HttpContentSerializers.Add(httpContentSerializer);
+			}
+		}
+
+		public void ClearHttpContentSerializers()
+		{
+			HttpContentSerializerImplementationTypes.Clear();
+			HttpContentSerializers.Clear();
+		}
+
+
+		internal readonly List<Type> RestClientValidatorImplementationTypes = new();
+		internal readonly List<IRestClientValidator> RestClientValidators = new();
+		public void AddValidator<TRestClientValidatorImplementation>()
+			where TRestClientValidatorImplementation : class, IRestClientValidator
+		{
+			var type = typeof(TRestClientValidatorImplementation);
+			if (!RestClientValidatorImplementationTypes.Contains(type))
+			{
+				RestClientValidatorImplementationTypes.Add(type);
+			}
+		}
+
+		public void AddValidator(IRestClientValidator validator)
+		{
+			if (validator == null) throw new ArgumentNullException(nameof(validator));
+			if (!RestClientValidators.Contains(validator))
+			{
+				RestClientValidators.Add(validator);
+			}
+		}
+
+		internal void CopyFrom(RestClientOptions options)
+		{
+			BaseAddress = options.BaseAddress;
+			DefaultRequestHeaders = options.DefaultRequestHeaders;
+			options.HttpContentSerializers.ForEach(i => HttpContentSerializers.Add(i));
+			options.HttpContentSerializerImplementationTypes.ForEach(i => HttpContentSerializerImplementationTypes.Add(i));
+			options.RestClientValidators.ForEach(i => RestClientValidators.Add(i));
+			options.RestClientValidatorImplementationTypes.ForEach(i => RestClientValidatorImplementationTypes.Add(i));
+		}
 	}
 }

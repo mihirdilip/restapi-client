@@ -12,7 +12,7 @@ namespace RestApi.Client
 	/// <summary>
 	/// The rest client interface for making any rest api requests.
 	/// </summary>
-	public interface IRestClient : IDisposable
+	public interface IRestClient 
 	{
 		/// <summary>
 		/// This is for internal use only!

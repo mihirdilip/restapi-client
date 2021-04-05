@@ -4,9 +4,9 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Http;
-using Microsoft.Extensions.Logging;
 using RestApi.Client.Authentication;
 using RestApi.Client.ContentSerializer;
+using RestApi.Client.Internals;
 using System;
 using System.ComponentModel;
 using System.Linq;
@@ -22,6 +22,7 @@ namespace RestApi.Client
 	{
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		public IServiceCollection Services { get; }
+		public string Name { get; }
 
 		/// <summary>
 		/// Creates an instance of rest client builder.
@@ -41,31 +42,58 @@ namespace RestApi.Client
 		{
 		}
 
+
 		/// <summary>
 		/// Creates an instance of rest client builder with <see cref="RestClientOptions"/>.
 		/// </summary>
 		/// <param name="options">The <see cref="RestClientOptions"/> used by the builder for building <see cref="IRestClient"/>.</param>
 		public RestClientBuilder(RestClientOptions options)
-			: this (new ServiceCollection(), options)
+			: this(new ServiceCollection(), string.Empty)
 		{
+			SetRestClientOptions(options);
 		}
 
-		internal RestClientBuilder(IServiceCollection services, RestClientOptions options = null)
+		internal RestClientBuilder(IServiceCollection services, string name)
 		{
 			Services = services;
+			Name = name ?? string.Empty;
 
 			Services.AddOptions();
-			Services.AddLogging(builder => builder.AddConsole().AddDebug());
-			Services.AddHttpClient();
+			Services.AddLogging();
+			
+			Services.TryAddSingleton<IRestClientFactory, RestClientFactory>();
 
-			Services.AddSingleton<IHttpContentHandler, HttpContentHandler>();
-			Services.AddSingleton<IRestClient, RestClient>();
+			Services.AddHttpClient();
+			Services.TryAddTransient(s => s.GetRequiredService<IRestClientFactory>().CreateClient(string.Empty));
 
 			this.AddPlainTextHttpContentSerializer();
 			this.AddJsonHttpContentSerializer();
 			this.AddNullAuthentication();
+		}
 
-			SetRestClientOptions(options);
+		internal RestClientBuilder AddNamedClient(string name)
+		{
+			Services.AddHttpClient(name);
+			Services.TryAddTransient(s => s.GetRequiredService<IRestClientFactory>().CreateClient(name));
+			return this;
+		}
+
+		internal RestClientBuilder AddTypedClient<TClient>(string name)
+			where TClient : class
+		{
+			if (string.IsNullOrWhiteSpace(name)) name = TypeNameHelper.GetTypeDisplayName(typeof(TClient), false);
+			Services.AddHttpClient(name);
+			Services.TryAddTransient<TClient>(s => s.GetRequiredService<IRestClientFactory>().CreateClient<TClient>(name));
+			return this;
+		}
+
+		internal RestClientBuilder AddTypedClient<TClient, TImplementation>(string name)
+			where TClient : class
+			where TImplementation : class, TClient
+		{
+			Services.AddHttpClient<TClient, TImplementation>(name);
+			Services.TryAddTransient<TClient>(s => s.GetRequiredService<IRestClientFactory>().CreateClient<TClient, TImplementation>(name));
+			return this;
 		}
 
 		/// <summary>
@@ -88,7 +116,7 @@ namespace RestApi.Client
 		/// <returns>Current rest client builder.</returns>
 		public IRestClientBuilder SetBaseAddress(Uri baseAddress)
 		{
-			Services.Configure<RestClientOptions>(options => options.BaseAddress = baseAddress);
+			Services.Configure<RestClientOptions>(Name, options => options.BaseAddress = baseAddress);
 			return this;
 		}
 
@@ -99,7 +127,7 @@ namespace RestApi.Client
 		/// <returns>Current rest client builder.</returns>
 		public IRestClientBuilder SetDefaultRequestHeaders(RestHttpHeaders defaultRequestHeaders)
 		{
-			Services.Configure<RestClientOptions>(options => options.DefaultRequestHeaders = defaultRequestHeaders);
+			Services.Configure<RestClientOptions>(Name, options => options.DefaultRequestHeaders = defaultRequestHeaders);
 			return this;
 		}
 
@@ -110,7 +138,7 @@ namespace RestApi.Client
 		/// <returns>Current rest client builder.</returns>
 		public IRestClientBuilder SetMaxResponseContentBufferSize(int maxResponseContentBufferSize)
 		{
-			Services.Configure<HttpClientFactoryOptions>(c => c.HttpClientActions.Add(client => client.MaxResponseContentBufferSize = maxResponseContentBufferSize));
+			Services.Configure<HttpClientFactoryOptions>(Name, c => c.HttpClientActions.Add(client => client.MaxResponseContentBufferSize = maxResponseContentBufferSize));
 			return this;
 		}
 
@@ -121,7 +149,7 @@ namespace RestApi.Client
 		/// <returns>Current rest client builder.</returns>
 		public IRestClientBuilder SetTimeout(TimeSpan timeout)
 		{
-			Services.Configure<HttpClientFactoryOptions>(c => c.HttpClientActions.Add(client => client.Timeout = timeout));
+			Services.Configure<HttpClientFactoryOptions>(Name, c => c.HttpClientActions.Add(client => client.Timeout = timeout));
 			return this;
 		}
 
@@ -132,7 +160,7 @@ namespace RestApi.Client
 		/// <returns>Current rest client builder.</returns>
 		public IRestClientBuilder SetPrimaryHttpMessageHandler(HttpMessageHandler primaryHandler)
 		{
-			Services.Configure<HttpClientFactoryOptions>(c => c.HttpMessageHandlerBuilderActions.Add(builder => builder.PrimaryHandler = primaryHandler));
+			Services.Configure<HttpClientFactoryOptions>(Name, c => c.HttpMessageHandlerBuilderActions.Add(builder => builder.PrimaryHandler = primaryHandler));
 			return this;
 		}
 
@@ -143,7 +171,7 @@ namespace RestApi.Client
 		/// <returns>Current rest client builder.</returns>
 		public IRestClientBuilder AddAdditionalDelegatingHandler(DelegatingHandler additionalHandler)
 		{
-			Services.Configure<HttpClientFactoryOptions>(c => c.HttpMessageHandlerBuilderActions.Add(builder => builder.AdditionalHandlers.Add(additionalHandler)));
+			Services.Configure<HttpClientFactoryOptions>(Name, c => c.HttpMessageHandlerBuilderActions.Add(builder => builder.AdditionalHandlers.Add(additionalHandler)));
 			return this;
 		}
 
@@ -157,7 +185,13 @@ namespace RestApi.Client
 		public IRestClientBuilder AddHttpContentSerializer<THttpContentSerializerImplementation>()
 			where THttpContentSerializerImplementation : class, IHttpContentSerializer
 		{
-			Services.AddSingleton<IHttpContentSerializer, THttpContentSerializerImplementation>();
+			Services.Configure<RestClientOptions>(Name, o => o.AddHttpContentSerializer<THttpContentSerializerImplementation>());
+			return this;
+		}
+
+		public IRestClientBuilder AddHttpContentSerializer(IHttpContentSerializer httpContentSerializer)
+		{
+			Services.Configure<RestClientOptions>(Name, o => o.AddHttpContentSerializer(httpContentSerializer));
 			return this;
 		}
 
@@ -168,7 +202,7 @@ namespace RestApi.Client
 		/// <returns>Current rest client builder.</returns>
 		public IRestClientBuilder ClearHttpContentSerializers()
 		{
-			Services.RemoveAll<IHttpContentSerializer>();
+			Services.Configure<RestClientOptions>(Name, o => o.ClearHttpContentSerializers());
 			return this;
 		}
 
@@ -207,20 +241,13 @@ namespace RestApi.Client
 		public IRestClientBuilder AddValidator<TRestClientValidatorImplementation>() 
 			where TRestClientValidatorImplementation : class, IRestClientValidator
 		{
-			Services.AddSingleton<IRestClientValidator, TRestClientValidatorImplementation>();
+			Services.Configure<RestClientOptions>(Name, o => o.AddValidator<TRestClientValidatorImplementation>());
 			return this;
 		}
 
-		/// <summary>
-		/// Replaces the default implementation of <see cref="IRestClient"/> with your custom implementation and adds to the dependency container as a singleton.
-		/// </summary>
-		/// <typeparam name="TRestClientImplementation">Your custom rest client which implements <see cref="IRestClient"/>.</typeparam>
-		/// <returns>Current rest client builder.</returns>
-		public IRestClientBuilder ReplaceRestClient<TRestClientImplementation>() 
-			where TRestClientImplementation : class, IRestClient
+		public IRestClientBuilder AddValidator(IRestClientValidator validator)
 		{
-			Services.RemoveAll<IRestClient>();
-			Services.AddSingleton<IRestClient, TRestClientImplementation>();
+			Services.Configure<RestClientOptions>(Name, o => o.AddValidator(validator));
 			return this;
 		}
 
@@ -238,9 +265,9 @@ namespace RestApi.Client
 			if (1 != Services.Count(s => s.ServiceType == typeof(IRestClient)))
 			{
 				throw new Exception("Only 1 rest client can be registered at a time.");
-			}
+}
 
-			return Services.BuildServiceProvider().GetService<IRestClient>();
+			return Services.BuildServiceProvider().GetRequiredService<IRestClientFactory>().CreateClient(Name);
 		}
 	}
 }

@@ -22,6 +22,8 @@ namespace RestApi.Client
 		[EditorBrowsable(EditorBrowsableState.Never)]
 		IServiceCollection Services { get; }
 
+		string Name { get; }
+
 		/// <summary>
 		/// Set the <see cref="RestClientOptions"/>.
 		/// </summary>
@@ -113,14 +115,6 @@ namespace RestApi.Client
 		/// <returns>Current rest client builder.</returns>
 		IRestClientBuilder AddValidator<TRestClientValidatorImplementation>()
 			where TRestClientValidatorImplementation : class, IRestClientValidator;
-
-		/// <summary>
-		/// Replaces the default implementation of <see cref="IRestClient"/> with your custom implementation.
-		/// </summary>
-		/// <typeparam name="TRestClientImplementation">Your custom rest client which implements <see cref="IRestClient"/>.</typeparam>
-		/// <returns>Current rest client builder.</returns>
-		IRestClientBuilder ReplaceRestClient<TRestClientImplementation>()
-			where TRestClientImplementation : class, IRestClient;
 
 		/// <summary>
 		/// Builds and returns a singleton instance of <see cref="IRestClient"/> which is the main core of this library and is used for all the rest api requests.

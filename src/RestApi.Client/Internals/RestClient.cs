@@ -1,10 +1,7 @@
 ﻿// Copyright (c) Mihir Dilip. All rights reserved.
 // Licensed under the MIT License. See License in the project root for license information.
 
-using Microsoft.Extensions.Options;
-using RestApi.Client.Authentication;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Net.Http;
 using System.Threading;
@@ -17,17 +14,16 @@ namespace RestApi.Client
 		private readonly RestClientOptions _options;
 		private readonly HttpClient _httpClient;
 		private readonly IHttpContentHandler _bodyContentHandler;
-		private readonly IRestAuthenticationHandler _restAuthenticationHandler;
+		//private readonly IRestAuthenticationHandler _restAuthenticationHandler;
 
-		public RestClient(IOptions<RestClientOptions> options, IServiceProvider serviceProvider, IHttpClientFactory httpClientFactory, IHttpContentHandler bodyContentHandler, IRestAuthenticationHandler restAuthenticationHandler, IEnumerable<IRestClientValidator> restClientValidators)
+		public RestClient(RestClientOptions options, HttpClient httpClient, IHttpContentHandler bodyContentHandler, IServiceProvider serviceProvider)
 		{
-			_options = options.Value;
-			_httpClient = httpClientFactory.CreateClient();
-			ServiceProvider = serviceProvider;
+			_options = options;
+			_httpClient = httpClient;
 			_bodyContentHandler = bodyContentHandler;
-			_restAuthenticationHandler = restAuthenticationHandler;
+			//_restAuthenticationHandler = restAuthenticationHandler;
 
-			ValidateInstance(restClientValidators);
+			ServiceProvider = serviceProvider;
 		}
 
 		[EditorBrowsable(EditorBrowsableState.Never)]
@@ -203,30 +199,6 @@ namespace RestApi.Client
 			}
 		}
 
-
-
-
-
-		public void Dispose()
-		{
-			_httpClient?.Dispose();
-		}
-
-
-
-
-
-		private void ValidateInstance(IEnumerable<IRestClientValidator> validators)
-		{
-			if (validators != null)
-			{
-				foreach (var validator in validators)
-				{
-					validator.Validate();
-				}
-			}
-		}
-
 		private async Task<HttpRequestMessage> BuildHttpRequestMessageAsync<TRequestContent>(HttpMethod httpMethod, string url, RestHttpHeaders headers, RestRequestContent<TRequestContent> content = default)
 		{
 			if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
@@ -258,7 +230,7 @@ namespace RestApi.Client
 				}
 			}
 
-			await _restAuthenticationHandler.HandleAsync(request).ConfigureAwait(false);
+			//await _restAuthenticationHandler.HandleAsync(request).ConfigureAwait(false);
 
 			if (content != null)
 			{
